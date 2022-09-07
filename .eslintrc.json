@@ -15,5 +15,14 @@
         "@typescript-eslint"
     ],
     "rules": {
+        "indent": "off",
+        "semi": "off",
+        "space-before-function-paren": "off",
+        "no-extend-native": "off",
+        "no-useless-constructor": "off",
+        "no-new-wrappers": "off",
+        "no-new": "off",
+        "no-use-before-define": "warn",
+        "no-unused-vars": "off"
     }
 }
