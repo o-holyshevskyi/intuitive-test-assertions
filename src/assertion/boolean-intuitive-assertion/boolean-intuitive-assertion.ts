@@ -7,10 +7,12 @@ export class BooleanAssertion extends IntuitiveAssertions<boolean> {
     }
 
     public beTruth(): void {
-        Execute.stuff.checkCondition(Boolean(this.object) === true).throwWithMessage(`Expected ${this.object} to be truth, but this is false`);
+        Execute.stuff.checkCondition(Boolean(this.object).valueOf() === Boolean(true).valueOf())
+            .throwWithMessage(`Expected ${this.object} to be truth, but this is false`);
     }
 
     public beFalse(): void {
-        Execute.stuff.checkCondition(Boolean(this.object) === false).throwWithMessage(`Expected ${this.object} to be false, but this is truth`)
+        Execute.stuff.checkCondition(Boolean(this.object).valueOf() === Boolean(false).valueOf())
+            .throwWithMessage(`Expected ${this.object} to be false, but this is truth`)
     }
 }
