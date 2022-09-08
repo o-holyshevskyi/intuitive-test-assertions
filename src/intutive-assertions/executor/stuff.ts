@@ -1,15 +1,15 @@
 export class AssertionStuff {
-    private succeeded!: boolean;
+  private succeeded!: boolean;
 
-    public checkCondition(condition: any): AssertionStuff {
-        this.succeeded = new Boolean(condition).valueOf();
+  public checkCondition(condition: any): AssertionStuff {
+    this.succeeded = new Boolean(condition).valueOf();
 
-        return this;
+    return this;
+  }
+
+  public throwWithMessage(message: string) {
+    if (!this.succeeded?.valueOf()) {
+      throw new Error(message).message;
     }
-
-    public throwWithMessage(message: string) {
-        if (!this.succeeded?.valueOf()) {
-            throw new Error(message).message;
-        }
-    }
+  }
 }

@@ -1,39 +1,39 @@
 import '../index';
 
 describe('test for boolean assertion', () => {
-    test('beTruth()', () => {
-        const bool = true;
+  test('beTruth()', () => {
+    const bool = true;
 
-        bool.must().beTruth();
-    });
+    bool.must().beTruth();
+  });
 
-    test('beFalse()', () => {
-        const bool = false;
+  test('beFalse()', () => {
+    const bool = false;
 
-        bool.must().beFalse();
-    });
+    bool.must().beFalse();
+  });
 
-    test('be()', () => {
-        const bool = false;
+  test('be()', () => {
+    const bool = false;
 
-        bool.must().be(false);
-    })
+    bool.must().be(false);
+  });
 
-    test('negative beTruth()', () => {
-        const bool = false;
+  test('negative beTruth()', () => {
+    const bool = false;
 
-        expect(() => bool.must().beTruth()).toThrow();
-    });
+    expect(() => bool.must().beTruth()).toThrow();
+  });
 
-    test('negative beFalse()', () => {
-        const bool = true;
+  test('negative beFalse()', () => {
+    const bool = true;
 
-        expect(() => bool.must().beFalse()).toThrow();
-    });
+    expect(() => bool.must().beFalse()).toThrow();
+  });
 
-    test('negative be()', () => {
-        const bool = true;
+  test('negative be()', () => {
+    const bool = true;
 
-        expect(() => bool.must().be(false)).toThrow();
-    })
+    expect(() => bool.must().be(false)).toThrow();
+  });
 });
