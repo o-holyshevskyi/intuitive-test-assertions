@@ -5,10 +5,16 @@ export {};
 
 declare global {
     export interface Boolean {
+        /**
+         * Returns the {@link BooleanAssertion} object that can be used to check the {@link Boolean} type
+         */
         must(): BooleanAssertion;
     }
 
     export interface Number {
+        /**
+         * Returns the {@link NumberAssertion} object that can be used to check the {@link Number} type
+         */
         must(): NumberAssertion;
     }
 }

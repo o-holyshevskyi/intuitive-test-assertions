@@ -1,15 +1,28 @@
 import { Execute } from './assertion-executing/execute';
+import { Continuance } from '../assertion/continuance/continuance';
 
 export default abstract class IntuitiveAssertions<TObject> {
     constructor(protected readonly object: TObject) {}
 
-    public be(expected: TObject): void {
+    /**
+     * Check if the expected object totally equals to expected value
+     * @param expected expected value
+     */
+    public be(expected: TObject): Continuance<this> {
         Execute.stuff.checkCondition(Object(this.object).valueOf() === Object(expected).valueOf())
-        .throwWithMessage(`Expected to be ${expected}, but found ${this.object}`);
+            .throwWithMessage(`Expected to be ${expected}, but found ${this.object}`);
+
+        return new Continuance(this);
     }
 
-    public notBe(expected: TObject): void {
+    /**
+     * Check if the expected object does not equal to expected value
+     * @param expected expected value
+     */
+    public notBe(expected: TObject): Continuance<this> {
         Execute.stuff.checkCondition(Object(this.object).valueOf() !== Object(expected).valueOf())
-        .throwWithMessage(`Expected to not be ${expected}, but found ${this.object} is similar`);
+            .throwWithMessage(`Expected to not be ${expected}, but found ${this.object}`);
+
+        return new Continuance(this);
     }
 }

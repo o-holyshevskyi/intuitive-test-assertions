@@ -1,4 +1,5 @@
 import { Execute } from '../assertion-executing/execute';
+import { Continuance } from '../continuance/continuance';
 import IntuitiveAssertions from '../intuitive-test-assertion';
 
 export class BooleanAssertion extends IntuitiveAssertions<boolean> {
@@ -6,13 +7,23 @@ export class BooleanAssertion extends IntuitiveAssertions<boolean> {
         super(value);
     }
 
-    public beTruth(): void {
+    /**
+     * Check if the expected object equals to true statement
+     */
+    public beTruth(): Continuance<this> {
         Execute.stuff.checkCondition(Boolean(this.object).valueOf() === Boolean(true).valueOf())
-            .throwWithMessage(`Expected ${this.object} to be truth, but this is false`);
+            .throwWithMessage(`Expected ${this.object} to be true statement, but found this is false`);
+
+        return new Continuance(this);
     }
 
-    public beFalse(): void {
+    /**
+     * Check if the expected object equals to false statement
+     */
+    public beFalse(): Continuance<this> {
         Execute.stuff.checkCondition(Boolean(this.object).valueOf() === Boolean(false).valueOf())
-            .throwWithMessage(`Expected ${this.object} to be false, but this is truth`)
+            .throwWithMessage(`Expected ${this.object} to be false statement, but found this is true`);
+
+        return new Continuance(this);
     }
 }
