@@ -1,6 +1,6 @@
-import { Execute } from '../assertion-executing/execute';
-import { Continuance } from '../continuance/continuance';
-import IntuitiveAssertions from '../intuitive-test-assertion';
+import { Execute } from '../../executor/execute';
+import { Continuance } from '../../continuance/continuance';
+import IntuitiveAssertions from '../intuitive-assertion';
 
 export class NumberAssertion extends IntuitiveAssertions<number> {
     private actual: number;

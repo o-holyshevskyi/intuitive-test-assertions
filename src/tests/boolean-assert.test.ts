@@ -1,5 +1,4 @@
-import { describe, test, expect } from '@jest/globals';
-import '../assertion/intuitive-assertion';
+import '../index';
 
 describe('test for boolean assertion', () => {
     test('beTruth()', () => {

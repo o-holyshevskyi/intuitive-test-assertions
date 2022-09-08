@@ -1,5 +1,5 @@
-import { Execute } from './assertion-executing/execute';
-import { Continuance } from '../assertion/continuance/continuance';
+import { Execute } from '../executor/execute';
+import { Continuance } from '../continuance/continuance';
 
 export default abstract class IntuitiveAssertions<TObject> {
     constructor(protected readonly object: TObject) {}

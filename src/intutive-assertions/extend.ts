@@ -1,7 +1,5 @@
-import { BooleanAssertion } from './boolean-intuitive-assertion/boolean-intuitive-assertion';
-import { NumberAssertion } from './number-intuitive-assertion/number-intuitive-assertion';
-
-export {};
+import { BooleanAssertion } from '../intutive-assertions/assertions/boolean-assertions/boolean-assertion';
+import { NumberAssertion } from '../intutive-assertions/assertions/number-assertions/number-assertion';
 
 declare global {
     export interface Boolean {
@@ -26,3 +24,5 @@ Boolean.prototype.must = function (this: boolean): BooleanAssertion {
 Number.prototype.must = function (this: number): NumberAssertion {
     return new NumberAssertion(this);
 }
+
+export {}
