@@ -9,7 +9,7 @@ export class AssertionStuff {
 
     public throwWithMessage(message: string) {
         if (!this.succeeded.valueOf()) {
-            throw new Error(message);
+            throw new Error(message).message;
         }
     }
 }
