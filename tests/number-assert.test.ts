@@ -31,6 +31,12 @@ describe('test for number assertion', () => {
     number.must().beLesserThan(13);
   });
 
+  test('beInRange', () => {
+    const number = 5;
+
+    number.must().beInRange(0, 10);
+  });
+
   test('negative bePositive() for 0', () => {
     const positive = 0;
 
