@@ -31,7 +31,7 @@ describe('test for number assertion', () => {
     number.must().beLesserThan(13);
   });
 
-  test('beInRange', () => {
+  test('beInRange()', () => {
     const number = 5;
 
     number.must().beInRange(0, 10);
@@ -71,5 +71,11 @@ describe('test for number assertion', () => {
     const number = 12;
 
     expect(() => number.must().beLesserThan(10)).toThrow();
+  });
+
+  test('negative beInRange()', () => {
+    const number = 5;
+
+    expect(() => number.must().beInRange(10, 12)).toThrow();
   });
 });
