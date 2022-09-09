@@ -1,4 +1,4 @@
-import '../index';
+import '../src/index';
 
 describe('test for number assertion', () => {
   test('bePositive()', () => {
