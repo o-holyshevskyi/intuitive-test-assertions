@@ -89,7 +89,7 @@ export class NumberAssertion extends IntuitiveAssertions<number> {
     Execute.stuff
       .checkCondition(this.actual >= Number(rangeStart).valueOf() && this.actual <= Number(rangeEnd).valueOf())
       .throwWithMessage(
-        `Expected '${this.actual}' to be in range '${rangeStart}' - '${rangeEnd}', but value is out of this range`,
+        `Expected '${this.actual}' to be in range '${rangeStart}' - '${rangeEnd}', but value is out of this range`
       );
 
     return new Continuance(this);
