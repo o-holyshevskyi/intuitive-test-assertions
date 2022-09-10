@@ -1,4 +1,5 @@
 import { BooleanAssertion } from './assertions/boolean-assertions/boolean-assertion';
+import { DateAssertion } from './assertions/date-assertions/date-assertion';
 import { NumberAssertion } from './assertions/number-assertions/number-assertion';
 import { StringAssertion } from './assertions/string-assertions/string-assertion';
 
@@ -23,6 +24,13 @@ declare global {
      */
     must(): StringAssertion;
   }
+
+  export interface Date {
+    /**
+     * Returns the {@link DateAssertion} object that can be used to check the {@link Date} type
+     */
+    must(): DateAssertion;
+  }
 }
 
 Boolean.prototype.must = function (this: boolean): BooleanAssertion {
@@ -35,6 +43,10 @@ Number.prototype.must = function (this: number): NumberAssertion {
 
 String.prototype.must = function (this: string): StringAssertion {
   return new StringAssertion(this);
+}
+
+Date.prototype.must = function (this: Date): DateAssertion {
+  return new DateAssertion(this);
 }
 
 export {};
