@@ -16,7 +16,7 @@ export class NumberAssertion extends IntuitiveAssertions<number> {
   public bePositive(): Continuance<this> {
     Execute.stuff
       .checkCondition(this.actual > 0)
-      .throwWithMessage(`Expected '${this.actual}' to be positive, but value is lesser than 0`);
+      .throwWithMessage(`Expected positive value '${this.actual}', but value is lesser than 0`);
 
     return new Continuance(this);
   }
@@ -27,7 +27,7 @@ export class NumberAssertion extends IntuitiveAssertions<number> {
   public beNegative(): Continuance<this> {
     Execute.stuff
       .checkCondition(this.actual < 0)
-      .throwWithMessage(`Expected '${this.actual}' to be negative, but value is greater than 0`);
+      .throwWithMessage(`Expected negative value '${this.actual}', but value is greater than 0`);
 
     return new Continuance(this);
   }
@@ -39,7 +39,7 @@ export class NumberAssertion extends IntuitiveAssertions<number> {
   public beGreaterThan(expected: number): Continuance<this> {
     Execute.stuff
       .checkCondition(this.actual > Number(expected).valueOf())
-      .throwWithMessage(`Expected '${this.actual}' to be greater than '${expected}', but value is lesser`);
+      .throwWithMessage(`Expected a value '${this.actual}' greater than '${expected}', but value is lesser`);
 
     return new Continuance(this);
   }
@@ -51,7 +51,7 @@ export class NumberAssertion extends IntuitiveAssertions<number> {
   public beLesserThan(expected: number): Continuance<this> {
     Execute.stuff
       .checkCondition(this.actual < Number(expected).valueOf())
-      .throwWithMessage(`Expected '${this.actual}' to be lesser than '${expected}', but value is greater`);
+      .throwWithMessage(`Expected a value '${this.actual}' lesser than '${expected}', but value is greater`);
 
     return new Continuance(this);
   }
@@ -63,7 +63,7 @@ export class NumberAssertion extends IntuitiveAssertions<number> {
   public beGreaterOrEqualTo(expected: number): Continuance<this> {
     Execute.stuff
       .checkCondition(this.actual >= Number(expected).valueOf())
-      .throwWithMessage(`Expected '${this.actual}' to be greater or equal to '${expected}', but value is lesser`);
+      .throwWithMessage(`Expected a value '${this.actual}' greater or equal to '${expected}', but value is lesser`);
 
     return new Continuance(this);
   }
@@ -75,7 +75,7 @@ export class NumberAssertion extends IntuitiveAssertions<number> {
   public beLesserOrEqualTo(expected: number): Continuance<this> {
     Execute.stuff
       .checkCondition(this.actual <= Number(expected).valueOf())
-      .throwWithMessage(`Expected '${this.actual}' to be lesser or equal to '${expected}', but value is greater`);
+      .throwWithMessage(`Expected a value '${this.actual}' lesser or equal to '${expected}', but value is greater`);
 
     return new Continuance(this);
   }
@@ -89,7 +89,7 @@ export class NumberAssertion extends IntuitiveAssertions<number> {
     Execute.stuff
       .checkCondition(this.actual >= Number(rangeStart).valueOf() && this.actual <= Number(rangeEnd).valueOf())
       .throwWithMessage(
-        `Expected '${this.actual}' to be in range '${rangeStart}' - '${rangeEnd}', but value is out of this range`
+        `Expected value '${this.actual}' to be between '${rangeStart}' and '${rangeEnd}', but value is out of this range`
       );
 
     return new Continuance(this);
@@ -101,7 +101,7 @@ export class NumberAssertion extends IntuitiveAssertions<number> {
   public beInteger(): Continuance<this> {
     Execute.stuff
       .checkCondition(Number.isInteger(this.actual))
-      .throwWithMessage(`Expected '${this.actual}' to be integer, but value has fraction`);
+      .throwWithMessage(`Expected value '${this.actual}' to be integer, but value has fraction`);
 
     return new Continuance(this);
   }
@@ -112,7 +112,7 @@ export class NumberAssertion extends IntuitiveAssertions<number> {
   public notBeInteger(): Continuance<this> {
     Execute.stuff
       .checkCondition(!Number.isInteger(this.actual))
-      .throwWithMessage(`Expected '${this.actual}' to be fraction, but value is integer`);
+      .throwWithMessage(`Expected value '${this.actual}' to be fraction, but value is integer`);
 
     return new Continuance(this);
   }

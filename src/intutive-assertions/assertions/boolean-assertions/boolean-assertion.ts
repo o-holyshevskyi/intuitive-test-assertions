@@ -10,10 +10,10 @@ export class BooleanAssertion extends IntuitiveAssertions<boolean> {
   /**
    * Check if the expected object equals to true statement
    */
-  public beTruth(): Continuance<this> {
+  public beTrue(): Continuance<this> {
     Execute.stuff
       .checkCondition(Boolean(this.object).valueOf() === Boolean(true).valueOf())
-      .throwWithMessage(`Expected ${this.object} to be true statement, but found this is false`);
+      .throwWithMessage(`Expected ${this.object}, but found False.`);
 
     return new Continuance(this);
   }
@@ -24,7 +24,7 @@ export class BooleanAssertion extends IntuitiveAssertions<boolean> {
   public beFalse(): Continuance<this> {
     Execute.stuff
       .checkCondition(Boolean(this.object).valueOf() === Boolean(false).valueOf())
-      .throwWithMessage(`Expected ${this.object} to be false statement, but found this is true`);
+      .throwWithMessage(`Expected ${this.object}, but found True.`);
 
     return new Continuance(this);
   }
