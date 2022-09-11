@@ -4,7 +4,7 @@ describe('test for boolean assertion', () => {
   test('beTruth()', () => {
     const bool = true;
 
-    bool.must().beTruth();
+    bool.must().beTrue();
   });
 
   test('beFalse()', () => {
@@ -22,7 +22,7 @@ describe('test for boolean assertion', () => {
   test('negative beTruth()', () => {
     const bool = false;
 
-    expect(() => bool.must().beTruth()).toThrow();
+    expect(() => bool.must().beTrue()).toThrow();
   });
 
   test('negative beFalse()', () => {

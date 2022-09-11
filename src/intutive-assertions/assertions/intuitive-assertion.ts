@@ -2,7 +2,7 @@ import { Execute } from '../executor/execute';
 import { Continuance } from '../continuance/continuance';
 
 export default abstract class IntuitiveAssertions<TObject> {
-  constructor(protected readonly object: TObject) {}
+  constructor(protected readonly object: TObject) { }
 
   /**
    * Check if the expected object totally equals to expected value
@@ -11,7 +11,7 @@ export default abstract class IntuitiveAssertions<TObject> {
   public be(expected: TObject): Continuance<this> {
     Execute.stuff
       .checkCondition(Object(this.object).valueOf() === Object(expected).valueOf())
-      .throwWithMessage(`Expected to be '${expected}', but found '${this.object}'`);
+      .throwWithMessage(`Expected value to be '${expected}', but found '${this.object}'`);
 
     return new Continuance(this);
   }
@@ -23,7 +23,7 @@ export default abstract class IntuitiveAssertions<TObject> {
   public notBe(expected: TObject): Continuance<this> {
     Execute.stuff
       .checkCondition(Object(this.object).valueOf() !== Object(expected).valueOf())
-      .throwWithMessage(`Expected to not be '${expected}', but found '${this.object}'`);
+      .throwWithMessage(`Expected value to not be '${expected}', but found '${this.object}'`);
 
     return new Continuance(this);
   }
@@ -33,7 +33,7 @@ export default abstract class IntuitiveAssertions<TObject> {
    */
   public beNullOrUndefined(): Continuance<this> {
     Execute.stuff.checkCondition(typeof this.object === null || typeof this.object === undefined)
-      .throwWithMessage(`Expected to be null or undefined, but found the '${this.object}'`)
+      .throwWithMessage(`Expected value to be null or undefined, but found the '${this.object}'`)
     return new Continuance(this);
   }
 
@@ -42,7 +42,7 @@ export default abstract class IntuitiveAssertions<TObject> {
    */
   public notBeNullOrUndefined(): Continuance<this> {
     Execute.stuff.checkCondition(typeof this.object !== null || typeof this.object !== undefined)
-      .throwWithMessage(`Expected to not be null or undefined, but found the '${this.object}'`)
+      .throwWithMessage(`Expected value to not be null or undefined, but found the '${this.object}'`)
     return new Continuance(this);
   }
 }
