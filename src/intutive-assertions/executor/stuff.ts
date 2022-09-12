@@ -1,8 +1,8 @@
 export class AssertionStuff {
   private succeeded!: boolean;
 
-  public checkCondition(condition: any): AssertionStuff {
-    this.succeeded = new Boolean(condition).valueOf();
+  public checkCondition(condition: boolean): AssertionStuff {
+    this.succeeded = condition;
 
     return this;
   }
