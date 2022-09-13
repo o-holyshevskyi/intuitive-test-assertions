@@ -10,7 +10,7 @@ describe('Positive tests for object type', () => {
     test('Test notBeEmpty() method', () => {
         const obj = { firstElement: 1 };
 
-        obj.must().notBeEmpty();
+        obj.must().not.beEmpty();
     })
 
     test('Test haveLength() method', () => {
@@ -40,7 +40,7 @@ describe('Positive tests for object type', () => {
     test('Test containsNullOrUndefined() method', () => {
         const obj = { firstElement: 1, secondElement: 2, thirdElement: 3 };
 
-        obj.must().notContainNullOrUndefined();
+        obj.must().not.containsNullOrUndefined();
     })
 
     test('Test containsKey() method', () => {
@@ -52,7 +52,7 @@ describe('Positive tests for object type', () => {
     test('Test notContainKey() method', () => {
         const obj = { firstElement: 1, secondElement: 2, thirdElement: 3 };
 
-        obj.must().notContainKey('name');
+        obj.must().not.containsKey('name');
     })
 
     test('Test contains() method', () => {
@@ -64,7 +64,7 @@ describe('Positive tests for object type', () => {
     test('Test notContain() method', () => {
         const obj = { firstElement: 1, secondElement: 2 }
 
-        obj.must().notContain((obj) => obj.subject.firstElement === 3);
+        obj.must().not.contains((obj) => obj.subject.firstElement === 3);
     })
 })
 
@@ -78,7 +78,7 @@ describe('Negative tests for object type', () => {
     test('Test notBeEmpty() method', () => {
         const obj = { };
 
-        expect(() => obj.must().notBeEmpty()).toThrow();
+        expect(() => obj.must().not.beEmpty()).toThrow();
     })
 
     test('Test haveLength() method', () => {
@@ -102,7 +102,7 @@ describe('Negative tests for object type', () => {
     test('Test notContainNullOrUndefined() method', () => {
         const obj = { firstElement: 1, secondElement: null, thirdElement: undefined };
 
-        expect(() => obj.must().notContainNullOrUndefined()).toThrow();
+        expect(() => obj.must().not.containsNullOrUndefined()).toThrow();
     })
 
     test('Test containsNullOrUndefined() method', () => {
@@ -120,7 +120,7 @@ describe('Negative tests for object type', () => {
     test('Test notContainKey() method', () => {
         const obj = { firstElement: 1, secondElement: 2, thirdElement: 3 };
 
-        expect(() => obj.must().notContainKey('secondElement')).toThrow();
+        expect(() => obj.must().not.containsKey('secondElement')).toThrow();
     })
 
     test('Test contains() method', () => {
@@ -132,6 +132,6 @@ describe('Negative tests for object type', () => {
     test('Test notContain() method', () => {
         const obj = { firstElement: 1, secondElement: 2, thirdElement: 3 };
 
-        expect(() => obj.must().notContain((obj) => obj.subject.firstElement === 1 )).toThrow();
+        expect(() => obj.must().not.contains((obj) => obj.subject.firstElement === 1 )).toThrow();
     })
 })

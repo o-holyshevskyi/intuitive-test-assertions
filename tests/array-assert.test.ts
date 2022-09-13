@@ -10,7 +10,7 @@ describe('Positive tests for array type', () => {
     test('Test notBeEmpty() method', () => {
         const array = [ 1, 2, 3, 4, 5 ];
 
-        array.must().notBeEmpty();
+        array.must().not.beEmpty();
     })
 })
 
@@ -24,6 +24,6 @@ describe('Negative tests for array type', () => {
     test('Test notBeEmpty() method', () => {
         const array: Date[] = [];
         
-        expect(() => array.must().notBeEmpty()).toThrow();
+        expect(() => array.must().not.beEmpty()).toThrow();
     })
 })
