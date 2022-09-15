@@ -23,20 +23,4 @@ export default abstract class IntuitiveAssertions<TObject> {
 
     return new Continuance(this);
   }
-
-  /**
-   * Check if the object is null or undefined
-   */
-  public beNullOrUndefined(): Continuance<this> {
-    Execute.stuff.checkCondition(
-        !this.opposite
-          ? typeof this.object === null || typeof this.object === undefined
-          : typeof this.object !== null || typeof this.object !== undefined
-      )
-      .throwWithMessage(
-        !this.opposite
-          ? `Expected value to be null or undefined, but found the '${this.object}'`
-          : `Expected value to not be null or undefined, but found the '${this.object}'`)
-    return new Continuance(this);
-  }
 }
