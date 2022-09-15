@@ -6,3 +6,16 @@ export function trimArgs (args: string): string {
 
     return match || '';
 }
+
+export function processArr<T>(arr: Array<T>): string {
+    let result = [];
+    
+    for (let i = 0; i < arr.length; ++i) {
+        let entry = arr[i];
+        result[i] = JSON.stringify(entry === undefined ? 'undefined' : entry === null ? 'null' : entry);
+    }
+
+    const resultArr = result.join(', ');
+
+    return resultArr;
+}
