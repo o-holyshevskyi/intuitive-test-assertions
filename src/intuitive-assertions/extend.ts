@@ -59,18 +59,18 @@ Number.prototype.must = function (this: number): NumberAssertion {
 
 String.prototype.must = function (this: string): StringAssertion {
   return new StringAssertion(this);
-}
+};
 
 Date.prototype.must = function (this: Date): DateAssertion {
   return new DateAssertion(this);
-}
+};
 
 Object.prototype.must = function (this: Object): ObjectAssertion {
   return new ObjectAssertion(this);
-}
+};
 
-Array.prototype.must = function<T> (this: Array<T>): ArrayAssertion<T> {
+Array.prototype.must = function <T>(this: Array<T>): ArrayAssertion<T> {
   return new ArrayAssertion(this);
-}
+};
 
 export {};
