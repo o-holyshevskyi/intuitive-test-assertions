@@ -23,7 +23,7 @@ export class StringAssertion extends IntuitiveAssertions<string> {
     public beEmptyOrWhiteSpace(): Continuance<this> {
         Execute.stuff.checkCondition(
                 !this.opposite 
-                    ? this.actual.length === 0
+                    ? this.actual.length === 0 || this.actual === ' '
                     : this.actual.length > 0 || this.actual === ' '
             )
             .throwWithMessage(
@@ -84,12 +84,12 @@ export class StringAssertion extends IntuitiveAssertions<string> {
             if (
                 !this.opposite 
                     ? !this.actual.includes(expectedString)
-                    : !this.actual.includes(expectedString)
+                    : this.actual.includes(expectedString)
                 ) {
                     Execute.stuff.throwWithMessage(
                         !this.opposite
                             ? `Expected the '${this.actual}' contains '${expectedString}'`
-                            : `Expected the '${this.actual}' contains '${expectedString}'`);
+                            : `Expected the '${this.actual}' does not contain '${expectedString}'`);
             }
         });
 
@@ -108,8 +108,8 @@ export class StringAssertion extends IntuitiveAssertions<string> {
             )
             .throwWithMessage(
                 !this.opposite    
-                    ? `Expected the '${this.actual}' starts with ${expected}`
-                    : `Expected the '${this.actual}' does not start with ${expected}`);
+                    ? `Expected the '${this.actual}' starts with '${expected}'`
+                    : `Expected the '${this.actual}' does not start with '${expected}'`);
 
         return new Continuance(this);
     }
@@ -126,8 +126,8 @@ export class StringAssertion extends IntuitiveAssertions<string> {
             )
             .throwWithMessage(
                 !this.opposite
-                    ? `Expected the '${this.actual}' ends with ${expected}`
-                    : `Expected the '${this.actual}' does not end with ${expected}`
+                    ? `Expected the '${this.actual}' ends with '${expected}'`
+                    : `Expected the '${this.actual}' does not end with '${expected}'`
             );
 
         return new Continuance(this);
@@ -163,8 +163,8 @@ export class StringAssertion extends IntuitiveAssertions<string> {
                 : this.actual.match(regexExpr) !== null) {
                 Execute.stuff.throwWithMessage(
                     !this.opposite
-                        ? `Expected the '${this.actual}' matches with regular expression`
-                        : `Expected the '${this.actual}' does not match with regular expression`);
+                        ? `Expected the '${this.actual}' matches with ${regexExpr} regular expression`
+                        : `Expected the '${this.actual}' does not match with ${regexExpr} regular expression`);
         }
 
         return new Continuance(this);
