@@ -376,14 +376,14 @@ describe('Negative tests for array type', () => {
     test('Test be()', () => {
         const nullArr = [ 's', 2, 7, 2 ];
 
-        expect(() => nullArr.must().be([ 2, 2, 7, 2, 5 ])).toThrow('Expected value to be \'2,2,7,2,5\', but found \'s,2,7,2\'');
+        expect(() => nullArr.must().be([ 2, 2, 7, 2, 5 ])).toThrow('Expected value to be \'[2,2,7,2,5]\', but found \'[\"s\",2,7,2]\'');
         
     })
 
     test('Test not.be()', () => {
         const nullArr = [ 2, 2, 7, 2 ];
 
-        expect(() => nullArr.must().not.be(nullArr)).toThrow('Expected value to not be \'2,2,7,2\', but found \'2,2,7,2\'');
+        expect(() => nullArr.must().not.be(nullArr)).toThrow('Expected value to not be \'[2,2,7,2]\', but found \'[2,2,7,2]\'');
         ;
     })
 })

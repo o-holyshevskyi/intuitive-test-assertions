@@ -12,7 +12,7 @@ export function processArr<T>(arr: Array<T>): string {
     
     for (let i = 0; i < arr.length; ++i) {
         let entry = arr[i];
-        result[i] = JSON.stringify(entry === undefined ? 'undefined' : entry === null ? 'null' : entry);
+        result[i] = JSON.stringify(entry === undefined ? 'undefined' : entry === null ? 'null' : entry instanceof Date ? entry.toLocaleDateString() : entry);
     }
 
     const resultArr = result.join(', ');
