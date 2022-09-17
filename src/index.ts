@@ -1,1 +1,1 @@
-export * from './intutive-assertions/extend';
+export * from './intuitive-assertions/extend';
