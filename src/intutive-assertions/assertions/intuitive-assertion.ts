@@ -17,8 +17,8 @@ export default abstract class IntuitiveAssertions<TObject> {
       )
       .throwWithMessage(
           !this.opposite
-            ? `Expected value to be '${expected}', but found '${this.object}'`
-            : `Expected value to not be '${expected}', but found '${this.object}'`
+            ? `Expected value to be '${JSON.stringify(expected)}', but found '${JSON.stringify(this.object)}'`
+            : `Expected value to not be '${JSON.stringify(expected)}', but found '${JSON.stringify(this.object)}'`
           );
 
     return new Continuance(this);

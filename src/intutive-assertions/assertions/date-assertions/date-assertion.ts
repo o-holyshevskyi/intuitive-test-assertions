@@ -1,5 +1,6 @@
 import { Continuance } from '../../continuance/continuance';
 import { Execute } from '../../executor/execute';
+import { processArr } from '../../utils/utils';
 import IntuitiveAssertions from '../intuitive-assertion';
 
 export class DateAssertion extends IntuitiveAssertions<Date> {
@@ -26,8 +27,8 @@ export class DateAssertion extends IntuitiveAssertions<Date> {
             )
             .throwWithMessage(
                 !this.opposite
-                    ? `Expected date be after '${expectedDate}', but found '${this.object}'`
-                    : `Expected date not be after '${expectedDate}', but found '${this.object}'`
+                    ? `Expected date be after '${expectedDate.toISOString()}', but found '${this.object.toISOString()}'`
+                    : `Expected date not be after '${expectedDate.toISOString()}', but found '${this.object.toISOString()}'`
             );
 
         return new Continuance(this);
@@ -45,8 +46,8 @@ export class DateAssertion extends IntuitiveAssertions<Date> {
             )
             .throwWithMessage(
                 !this.opposite
-                    ? `Expected date be before '${expectedDate}', but found '${this.object}'`
-                    : `Expected date not be before '${expectedDate}', but found '${this.object}'`
+                    ? `Expected date be before '${expectedDate.toISOString()}', but found '${this.object.toISOString()}'`
+                    : `Expected date not be before '${expectedDate.toISOString()}', but found '${this.object.toISOString()}'`
             );
 
         return new Continuance(this);
@@ -64,8 +65,8 @@ export class DateAssertion extends IntuitiveAssertions<Date> {
             )
             .throwWithMessage(
                 !this.opposite
-                    ? `Expected date be on or after '${expectedDate}', but found '${this.object}'`
-                    : `Expected date not be on or after '${expectedDate}', but found '${this.object}'`
+                    ? `Expected date be on or after '${expectedDate.toISOString()}', but found '${this.object.toISOString()}'`
+                    : `Expected date not be on or after '${expectedDate.toISOString()}', but found '${this.object.toISOString()}'`
             );
 
         return new Continuance(this);
@@ -83,8 +84,8 @@ export class DateAssertion extends IntuitiveAssertions<Date> {
             )
             .throwWithMessage(
                 !this.opposite
-                    ? `Expected date be on or before '${expectedDate}', but found '${this.object}'`
-                    : `Expected date not be on or before '${expectedDate}', but found '${this.object}'`
+                    ? `Expected date be on or before '${expectedDate.toISOString()}', but found '${this.object.toISOString()}'`
+                    : `Expected date not be on or before '${expectedDate.toISOString()}', but found '${this.object.toISOString()}'`
             );
 
         return new Continuance(this);
@@ -209,8 +210,8 @@ export class DateAssertion extends IntuitiveAssertions<Date> {
             )
             .throwWithMessage(
                 !this.opposite
-                    ? `Expected minutes equals to '${actualMinutes}', but found '${actualMinutes}'`
-                    : `Expected minutes not equals to '${actualMinutes}', but found '${actualMinutes}'`
+                    ? `Expected minutes equals to '${minutes}', but found '${actualMinutes}'`
+                    : `Expected minutes not equals to '${minutes}', but found '${actualMinutes}'`
             );
         
         return new Continuance(this);
@@ -230,8 +231,8 @@ export class DateAssertion extends IntuitiveAssertions<Date> {
             )
             .throwWithMessage(
                 !this.opposite
-                    ? `Expected seconds equals to '${actualSeconds}', but found '${actualSeconds}'`
-                    : `Expected seconds not equals to '${actualSeconds}', but found '${actualSeconds}'`
+                    ? `Expected seconds equals to '${seconds}', but found '${actualSeconds}'`
+                    : `Expected seconds not equals to '${seconds}', but found '${actualSeconds}'`
             );
         
         return new Continuance(this);
@@ -250,8 +251,8 @@ export class DateAssertion extends IntuitiveAssertions<Date> {
             )
             .throwWithMessage(
                 !this.opposite
-                    ? `Expected '${this.object}' to be from '${startDate}' to '${endDate}', but value is out of this range`
-                    : `Expected '${this.object}' to be before '${startDate}' or after '${endDate}', but value is in of this range`
+                    ? `Expected '${this.object.toLocaleDateString()}' to be from '${startDate.toLocaleDateString()}' to '${endDate.toLocaleDateString()}', but value is out of this range`
+                    : `Expected '${this.object.toLocaleDateString()}' to be before '${startDate.toLocaleDateString()}' or after '${endDate.toLocaleDateString()}', but value is in of this range`
             );
 
         return new Continuance(this);
@@ -272,7 +273,7 @@ export class DateAssertion extends IntuitiveAssertions<Date> {
             .throwWithMessage(
                 !this.opposite
                     ? `Expected date precisely equals to '${timestamp}', but found ${actualTimestamp}`
-                    : `Expected date not equals to '${timestamp}', but found ${actualTimestamp}`
+                    : `Expected date precisely not equals to '${timestamp}', but found ${actualTimestamp}`
             );
 
         return new Continuance(this);
@@ -283,41 +284,23 @@ export class DateAssertion extends IntuitiveAssertions<Date> {
      * @param expectedDatesArray dates array
      */
     public beOneOf(expectedDatesArray: Array<Date>): Continuance<this> {
-        expectedDatesArray.forEach(expectedDate => {
-            Execute.stuff.checkCondition(
-                    !this.opposite
-                        ? this.object !== expectedDate
-                        : this.object === expectedDate
-                )
-                .throwWithMessage(
-                    !this.opposite
-                        ? `Expected date be at least one of '${expectedDatesArray}', but found '${this.object}'`
-                        : `Expected date not be one of '${expectedDatesArray}', but found '${this.object}'`
-                );
-        });
-
-        return new Continuance(this);
-    }
-
-    /**
-     * Check if the date is close to date with difference in milliseconds
-     * @param expectedDate expected date
-     * @param rigor difference time in milliseconds
-     */
-    public beCloseTo(expectedDate: Date, rigor: number): Continuance<this> {
-        const actualTimestamp = this.object.getTime();
-        const expectedTimestamp = expectedDate.getTime();
-
+        const isOneOf = this.isInArray(expectedDatesArray, this.object);
+        
         Execute.stuff.checkCondition(
                 !this.opposite
-                    ? actualTimestamp <= expectedTimestamp + rigor || actualTimestamp <= expectedTimestamp - rigor
-                    : actualTimestamp >= expectedTimestamp + rigor || actualTimestamp >= expectedTimestamp - rigor
+                    ? isOneOf
+                    : !isOneOf
             )
             .throwWithMessage(
                 !this.opposite
-                    ? `Expected date be close to '${expectedDate}' with difference in ${rigor} milliseconds, but found ${this.object}`
-                    : `Expected date not be close to '${expectedDate}' with difference in ${rigor} milliseconds, but found ${this.object}`)
+                    ? `Expected date be at least one of '${processArr(expectedDatesArray)}', but found '${this.object.toLocaleDateString()}'`
+                    : `Expected date not be one of '${processArr(expectedDatesArray)}', but found '${this.object.toLocaleDateString()}'`
+            );
 
         return new Continuance(this);
     }
+
+    private isInArray(array: Array<Date>, value: Date): boolean {
+        return !!array.find(item => {return item.getTime() == value.getTime()});
+      }
 }
