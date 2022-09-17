@@ -171,7 +171,7 @@ str.must().containsAll([ 'Intuitive', 'test', 'assertions' ]);
 str.must().containsAny([ 'Intuitive' ]);
 str.must().endsWith('assertions');
 str.must().startsWith('Intuitive');
-str.must().hasLength(25);
+str.must().hasLength(26);
 str.must().match(/.+/gm);
 
 str.must().beEmptyOrWhiteSpace();
