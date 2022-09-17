@@ -1,5 +1,5 @@
 export function trimArgs (args: string): string {
-    let match = args.toString().match(/\{[^}]*\}/gm);
+    const match = args.toString().match(/\{[^}]*\}/gm);
     if (match !== null) {
         return match[0].replace(/(return )/, '') || '';
     }
@@ -7,11 +7,11 @@ export function trimArgs (args: string): string {
     return match || '';
 }
 
-export function processArr<T>(arr: Array<T>): string {
-    let result = [];
+export function processArr<T>(arr: boolean[] | object[] | null[] | undefined[] | string[] | number[] | T[]): string {
+    const result = [];
     
     for (let i = 0; i < arr.length; ++i) {
-        let entry = arr[i];
+        const entry = arr[i];
         result[i] = JSON.stringify(entry === undefined ? 'undefined' : entry === null ? 'null' : entry instanceof Date ? entry.toLocaleDateString() : entry);
     }
 

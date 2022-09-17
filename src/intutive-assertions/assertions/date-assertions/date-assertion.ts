@@ -301,6 +301,6 @@ export class DateAssertion extends IntuitiveAssertions<Date> {
     }
 
     private isInArray(array: Array<Date>, value: Date): boolean {
-        return !!array.find(item => {return item.getTime() == value.getTime()});
+        return !!array.find(item => {return item.getTime() === value.getTime()});
       }
 }
