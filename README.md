@@ -37,7 +37,7 @@ bool.must().beTrue();
 bool.must().not.beFalse();
 bool.must().not.be(false);
 
-bool.must().beFalse(); // the message will be thrown: 'Expected false, but found True.'
+bool.must().beFalse(); // the message will be thrown: 'Expected value to be 'False', but found 'true''
 ```
 
 ## Number
