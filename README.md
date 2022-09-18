@@ -1,4 +1,4 @@
-[![npm](https://img.shields.io/npm/v/intuitive-test-assertions?style=plastic)](https://www.npmjs.com/package/intuitive-test-assertions) [![downloads](https://img.shields.io/npm/dw/intuitive-test-assertions?style=plastic)](https://www.npmjs.com/package/intuitive-test-assertions) [![follow](https://img.shields.io/github/forks/holyaleks/test-assertion?style=social)](https://github.com/holyaleks/test-assertion)
+[![npm](https://img.shields.io/npm/v/intuitive-test-assertions?style=plastic)](https://www.npmjs.com/package/intuitive-test-assertions) [![downloads](https://img.shields.io/npm/dw/intuitive-test-assertions?style=plastic)](https://www.npmjs.com/package/intuitive-test-assertions) [![checks](https://img.shields.io/github/checks-status/holyaleks/test-assertion/main?style=plastic)](https://github.com/holyaleks/test-assertion/actions) [![follow](https://img.shields.io/github/forks/holyaleks/test-assertion?style=social)](https://github.com/holyaleks/test-assertion)
 
 # Intuitive Assertion
 
