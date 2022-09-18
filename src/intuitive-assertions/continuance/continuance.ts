@@ -2,6 +2,7 @@ import { BooleanAssertion } from '../assertions/boolean-assertions/boolean-asser
 import { ArrayAssertion } from '../assertions/collection-assertions/array-assertion';
 import { ObjectAssertion } from '../assertions/collection-assertions/object-assertion';
 import { DateAssertion } from '../assertions/date-assertions/date-assertion';
+import { FunctionAssertion } from '../assertions/function-assertions/function-assertion';
 import { NumberAssertion } from '../assertions/number-assertions/number-assertion';
 import { StringAssertion } from '../assertions/string-assertions/string-assertion';
 
@@ -33,6 +34,9 @@ export class Continuance<TAssertion extends any, TValue extends any | undefined 
     }
     if (typeof type === 'object' && Object.getPrototypeOf(type) === StringAssertion.prototype) {
       return new StringAssertion(value as string, false) as TAssertion;
+    }
+    if (typeof type === 'object' && Object.getPrototypeOf(type) === FunctionAssertion.prototype) {
+      return new FunctionAssertion(value as any, false) as TAssertion;
     }
   }
 }

@@ -2,6 +2,7 @@ import { BooleanAssertion } from './assertions/boolean-assertions/boolean-assert
 import { ArrayAssertion } from './assertions/collection-assertions/array-assertion';
 import { ObjectAssertion } from './assertions/collection-assertions/object-assertion';
 import { DateAssertion } from './assertions/date-assertions/date-assertion';
+import { FunctionAssertion } from './assertions/function-assertions/function-assertion';
 import { NumberAssertion } from './assertions/number-assertions/number-assertion';
 import { StringAssertion } from './assertions/string-assertions/string-assertion';
 
@@ -47,6 +48,13 @@ declare global {
      */
     must(): ArrayAssertion<T>;
   }
+
+  export interface Function {
+    /**
+     * Returns the {@link FunctionAssertion} object that can be used to check the {@link Function} type
+     */
+    must(): FunctionAssertion;
+  }
 }
 
 Boolean.prototype.must = function (this: boolean): BooleanAssertion {
@@ -71,6 +79,10 @@ Object.prototype.must = function (this: Object): ObjectAssertion {
 
 Array.prototype.must = function <T>(this: Array<T>): ArrayAssertion<T> {
   return new ArrayAssertion(this);
+};
+
+Function.prototype.must = function (this: Function): FunctionAssertion {
+  return new FunctionAssertion(this);
 };
 
 export {};
