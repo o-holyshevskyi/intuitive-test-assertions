@@ -25,8 +25,12 @@ export class NumberAssertion extends IntuitiveAssertions<number> {
       .checkCondition(!this.opposite ? this.actual > 0 : this.actual < 0)
       .throwWithMessage(
         !this.opposite
-          ? `Expected positive value '${this.actual}', but value is lesser than 0`
-          : `Expected not positive value '${this.actual}', but value is lesser than 0`,
+          ? this.actual === 0
+            ? `Expected positive value, but value '${this.actual}' equal to 0`
+            : `Expected positive value, but value '${this.actual}' is lesser than 0`
+          : this.actual === 0
+            ? `Expected not positive value, but value '${this.actual}' equal to 0`
+            : `Expected not positive value, but value '${this.actual}' is greater than 0`,
       );
 
     return new Continuance(this);
@@ -40,8 +44,12 @@ export class NumberAssertion extends IntuitiveAssertions<number> {
       .checkCondition(!this.opposite ? this.actual < 0 : this.actual > 0)
       .throwWithMessage(
         !this.opposite
-          ? `Expected negative value '${this.actual}', but value is greater than 0`
-          : `Expected not negative value '${this.actual}', but value is greater than 0`,
+          ? this.actual === 0 
+            ? `Expected negative value, but value '${this.actual}' equal to 0` 
+            : `Expected negative value, but value '${this.actual}' is greater than 0`
+          : this.actual === 0
+            ? `Expected not negative value, but value '${this.actual}' equal to 0`
+            : `Expected not negative value, but value '${this.actual}' is lesser than 0`,
       );
 
     return new Continuance(this);
@@ -58,8 +66,8 @@ export class NumberAssertion extends IntuitiveAssertions<number> {
       )
       .throwWithMessage(
         !this.opposite
-          ? `Expected a value '${this.actual}' greater than '${expected}', but value is lesser`
-          : `Expected a value '${this.actual}' not be greater than '${expected}', but value is lesser`,
+          ? `Expected a value '${this.actual}' be greater than '${expected}', but value is lesser`
+          : `Expected a value '${this.actual}' not be greater than '${expected}', but value is greater`,
       );
 
     return new Continuance(this);
@@ -76,8 +84,8 @@ export class NumberAssertion extends IntuitiveAssertions<number> {
       )
       .throwWithMessage(
         !this.opposite
-          ? `Expected a value '${this.actual}' lesser than '${expected}', but value is greater`
-          : `Expected a value '${this.actual}' not be lesser than '${expected}', but value is greater`,
+          ? `Expected a value '${this.actual}' be lesser than '${expected}', but value is greater`
+          : `Expected a value '${this.actual}' not be lesser than '${expected}', but value is lesser`,
       );
 
     return new Continuance(this);

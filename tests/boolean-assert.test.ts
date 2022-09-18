@@ -1,6 +1,6 @@
 import '../src/index';
 
-describe('test for boolean assertion', () => {
+describe('Positive tests for boolean assertion', () => {
   test('beTruth()', () => {
     const bool = true;
 
@@ -36,40 +36,42 @@ describe('test for boolean assertion', () => {
 
     bool.must().not.be(true);
   });
+});
 
+describe('Negative tests for boolean assertion', () => {
   test('negative beTruth()', () => {
     const bool = false;
 
-    expect(() => bool.must().beTrue()).toThrow();
+    expect(() => bool.must().beTrue()).toThrow('Expected value to be \'True\', but found \'false\'');
   });
 
   test('negative not.beTruth()', () => {
     const bool = true;
 
-    expect(() => bool.must().not.beTrue()).toThrow();
+    expect(() => bool.must().not.beTrue()).toThrow('Expected value to not be \'True\', but found \'true\'');
   });
 
   test('negative beFalse()', () => {
     const bool = true;
 
-    expect(() => bool.must().beFalse()).toThrow();
+    expect(() => bool.must().beFalse()).toThrow('Expected value to be \'False\', but found \'true\'');
   });
 
   test('negative not.beFalse()', () => {
     const bool = false;
 
-    expect(() => bool.must().not.beFalse()).toThrow();
+    expect(() => bool.must().not.beFalse()).toThrow('Expected value to not be \'False\', but found \'false\'');
   });
 
   test('negative be()', () => {
     const bool = true;
 
-    expect(() => bool.must().be(false)).toThrow();
+    expect(() => bool.must().be(false)).toThrow('Expected value to be \'false\', but found \'true\'');
   });
 
   test('negative not.be()', () => {
     const bool = false;
 
-    expect(() => bool.must().not.be(false)).toThrow();
+    expect(() => bool.must().not.be(false)).toThrow('Expected value to not be \'false\', but found \'false\'');
   });
 });

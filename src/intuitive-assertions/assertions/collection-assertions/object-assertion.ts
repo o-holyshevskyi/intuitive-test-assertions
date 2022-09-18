@@ -39,8 +39,8 @@ export class ObjectAssertion {
       )
       .throwWithMessage(
         !this.opposite
-          ? `Expected collection to have length '${length}', but found ${Object.keys(this.subject).length}`
-          : `Expected collection to not have length '${length}', but found ${Object.keys(this.subject).length}`,
+          ? `Expected collection to have length '${length}', but found '${Object.keys(this.subject).length}'`
+          : `Expected collection to not have length '${length}', but found '${Object.keys(this.subject).length}'`,
       );
 
     return new Continuance(this);
@@ -57,12 +57,12 @@ export class ObjectAssertion {
       )
       .throwWithMessage(
         !this.opposite
-          ? `Expected collection to have length equal or greater than '${length}', but found ${
+          ? `Expected collection to have length equal or greater than '${length}', but found '${
               Object.keys(this.subject).length
-            }`
-          : `Expected collection to not have length equal or greater than '${length}', but found ${
+            }'`
+          : `Expected collection to not have length equal or greater than '${length}', but found '${
               Object.keys(this.subject).length
-            }`,
+            }'`,
       );
 
     return new Continuance(this);
@@ -79,12 +79,12 @@ export class ObjectAssertion {
       )
       .throwWithMessage(
         !this.opposite
-          ? `Expected collection to have length equal or lesser than '${length}', but found ${
+          ? `Expected collection to have length equal or lesser than '${length}', but found '${
               Object.keys(this.subject).length
-            }`
-          : `Expected collection to not have length equal or lesser than '${length}', but found ${
+            }'`
+          : `Expected collection to not have length equal or lesser than '${length}', but found '${
               Object.keys(this.subject).length
-            }`,
+            }'`,
       );
 
     return new Continuance(this);
@@ -161,7 +161,9 @@ export class ObjectAssertion {
     Execute.stuff
       .checkCondition(!this.opposite ? expression(this) : !expression(this))
       .throwWithMessage(
-        `Expected collection ${trimArgs(arguments[0])}, but found ${JSON.stringify(this.subject?.valueOf())}}`,
+        !this.opposite
+          ? `Expected collection contains ${trimArgs(arguments[0])}, but found ${JSON.stringify(this.subject?.valueOf())}}`
+          : `Expected collection does not contain ${trimArgs(arguments[0])}, but found ${JSON.stringify(this.subject?.valueOf())}}`,
       );
   }
 }
