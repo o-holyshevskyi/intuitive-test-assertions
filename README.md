@@ -179,3 +179,22 @@ str.must().match(/.+/gm);
 str.must().beEmptyOrWhiteSpace(); // the message will be thrown: 
 // 'Expected be empty or white space, but found 'Intuitive test assertions''
 ```
+
+## Multiple assertion statements in one row
+
+If you want to check something with two or more statements in one row use `and` property
+
+```TypeScript
+// *.test.ts file
+import 'intuitive-test-assertions';
+
+function foo(): Array<number> {
+    return [ 1, 2, 3, 4, 5, 6 ];
+}
+
+const arr = foo();
+
+// if you want to check something with two or more statements in one row use and property
+arr.must().not.beEmpty().and.haveLength(6);
+
+```
