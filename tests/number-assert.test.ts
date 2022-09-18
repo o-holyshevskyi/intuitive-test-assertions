@@ -4,7 +4,7 @@ describe('Positive tests for number assertion', () => {
   test('bePositive()', () => {
     const positive = 1;
 
-    positive.must().bePositive();
+    positive.must().bePositive().and.be(1);
   });
 
   test('not.bePositive()', () => {

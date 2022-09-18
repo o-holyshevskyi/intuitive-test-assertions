@@ -4,13 +4,13 @@ describe('Positive tests for array type', () => {
     test('Test beEmpty() method', () => {
         const array: string[] = [];
 
-        array.must().beEmpty();
+        array.must().beEmpty().and.not.haveLengthEqualOrGreaterThan(1);
     })
 
     test('Test not.beEmpty() method', () => {
         const array = [ 1, 2, 3, 4, 5 ];
 
-        array.must().not.beEmpty();
+        array.must().not.beEmpty().and.haveLength(5);
     })
 
     test('Test haveLength()', () => {

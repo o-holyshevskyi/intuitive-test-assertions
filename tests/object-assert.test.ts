@@ -10,7 +10,7 @@ describe('Positive tests for object type', () => {
     test('Test notBeEmpty() method', () => {
         const obj = { firstElement: 1 };
 
-        obj.must().not.beEmpty();
+        obj.must().not.beEmpty().and.not.contains((object) => object.subject.firstElement === 2);
     })
 
     test('Test haveLength() method', () => {

@@ -10,13 +10,13 @@ describe('Positive tests for boolean assertion', () => {
   test('not.beTruth()', () => {
     const bool = false;
 
-    bool.must().not.beTrue();
+    bool.must().not.beTrue().and.beFalse();
   });
 
   test('beFalse()', () => {
     const bool = false;
 
-    bool.must().beFalse();
+    bool.must().beFalse().and.not.beTrue();
   });
 
   test('not.beFalse()', () => {

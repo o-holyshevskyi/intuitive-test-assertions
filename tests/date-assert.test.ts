@@ -76,7 +76,7 @@ describe('Positive tests for date type', () => {
     test('Test containsYear() method', () => {
         const date = new Date();
 
-        date.must().containsYear(new Date().getFullYear());
+        date.must().containsYear(new Date().getFullYear()).and.not.containsHours(date.getHours() - 2);
     })
 
     test('Test not.containsYear() method', () => {

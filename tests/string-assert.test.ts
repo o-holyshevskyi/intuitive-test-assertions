@@ -4,7 +4,7 @@ describe('Positive tests for string type', () => {
     test('Test be() method', () => {
         const str = 'Intuitive tests assertions';
 
-        str.must().be(str);
+        str.must().be(str).and.hasLength(26);
     })
 
     test('Test not.be() method', () => {
