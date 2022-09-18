@@ -343,7 +343,7 @@ describe('Negative tests for date type', () => {
     test('Test beInDateRange() method', () => {
         const date = new Date(2200, 4, 13);
 
-        expect(() => date.must().beInDateRange(new Date(2000, 1, 1), new Date())).toThrow('Expected \'5/13/2200\' to be from \'2/1/2000\' to \'9/17/2022\', but value is out of this range');
+        expect(() => date.must().beInDateRange(new Date(2000, 1, 1), new Date())).toThrow(`Expected \'5/13/2200\' to be from \'2/1/2000\' to \'${new Date().toLocaleDateString()}\', but value is out of this range`);
     })
 
     test('Test not.beInDateRange() method', () => {
@@ -368,7 +368,7 @@ describe('Negative tests for date type', () => {
     test('Test beOneOf() method', () => {
         const date = new Date();
 
-        expect(() => date.must().beOneOf([ new Date(2000, 4, 13), new Date(2000, 4, 25) ])).toThrow('Expected date be at least one of \'\"5/13/2000\", \"5/25/2000\"\', but found \'9/17/2022\'');
+        expect(() => date.must().beOneOf([ new Date(2000, 4, 13), new Date(2000, 4, 25) ])).toThrow(`Expected date be at least one of \'\"5/13/2000\", \"5/25/2000\"\', but found \'${new Date().toLocaleDateString()}\'`);
     })
 
     test('Test not.beOneOf() method', () => {
