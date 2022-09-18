@@ -21,7 +21,9 @@ export class BooleanAssertion extends IntuitiveAssertions<boolean> {
     Execute.stuff
       .checkCondition(!this.opposite ? this.object === true : this.object !== true)
       .throwWithMessage(
-        !this.opposite ? `Expected value to be 'True', but found '${this.object}'` : `Expected value to not be 'True', but found '${this.object}'`,
+        !this.opposite
+          ? `Expected value to be 'True', but found '${this.object}'`
+          : `Expected value to not be 'True', but found '${this.object}'`,
       );
 
     return new Continuance(this);
@@ -34,7 +36,9 @@ export class BooleanAssertion extends IntuitiveAssertions<boolean> {
     Execute.stuff
       .checkCondition(!this.opposite ? this.object === false : this.object !== false)
       .throwWithMessage(
-        !this.opposite ? `Expected value to be 'False', but found '${this.object}'` : `Expected value to not be 'False', but found '${this.object}'`,
+        !this.opposite
+          ? `Expected value to be 'False', but found '${this.object}'`
+          : `Expected value to not be 'False', but found '${this.object}'`,
       );
 
     return new Continuance(this);

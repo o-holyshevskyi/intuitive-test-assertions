@@ -162,8 +162,12 @@ export class ObjectAssertion {
       .checkCondition(!this.opposite ? expression(this) : !expression(this))
       .throwWithMessage(
         !this.opposite
-          ? `Expected collection contains ${trimArgs(arguments[0])}, but found ${JSON.stringify(this.subject?.valueOf())}}`
-          : `Expected collection does not contain ${trimArgs(arguments[0])}, but found ${JSON.stringify(this.subject?.valueOf())}}`,
+          ? `Expected collection contains ${trimArgs(arguments[0])}, but found ${JSON.stringify(
+              this.subject?.valueOf(),
+            )}}`
+          : `Expected collection does not contain ${trimArgs(arguments[0])}, but found ${JSON.stringify(
+              this.subject?.valueOf(),
+            )}}`,
       );
   }
 }
