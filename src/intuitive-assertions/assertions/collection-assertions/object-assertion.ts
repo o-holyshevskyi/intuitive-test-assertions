@@ -16,7 +16,7 @@ export class ObjectAssertion {
   /**
    * Check if the collection is empty
    */
-  public beEmpty(): Continuance<this> {
+  public beEmpty(): Continuance<this, object> {
     Execute.stuff
       .checkCondition(!this.opposite ? Object.keys(this.subject).length === 0 : Object.keys(this.subject).length > 0)
       .throwWithMessage(
@@ -25,14 +25,14 @@ export class ObjectAssertion {
           : `Expected collection to not be empty, but found ${JSON.stringify(this.subject?.valueOf())}`,
       );
 
-    return new Continuance(this);
+    return new Continuance(this, this.subject);
   }
 
   /**
    * Check if the collection has length equal to expected
    * @param length
    */
-  public haveLength(length: number): Continuance<this> {
+  public haveLength(length: number): Continuance<this, object> {
     Execute.stuff
       .checkCondition(
         !this.opposite ? Object.keys(this.subject).length === length : Object.keys(this.subject).length !== length,
@@ -43,14 +43,14 @@ export class ObjectAssertion {
           : `Expected collection to not have length '${length}', but found '${Object.keys(this.subject).length}'`,
       );
 
-    return new Continuance(this);
+    return new Continuance(this, this.subject);
   }
 
   /**
    * Check if the collection has length equal or greater than the expected
    * @param length
    */
-  public haveLengthEqualOrGreaterThan(length: number): Continuance<this> {
+  public haveLengthEqualOrGreaterThan(length: number): Continuance<this, object> {
     Execute.stuff
       .checkCondition(
         !this.opposite ? Object.keys(this.subject).length >= length : Object.keys(this.subject).length <= length,
@@ -65,14 +65,14 @@ export class ObjectAssertion {
             }'`,
       );
 
-    return new Continuance(this);
+    return new Continuance(this, this.subject);
   }
 
   /**
    * Check if the collection has length equal or greater than the expected
    * @param length
    */
-  public haveLengthEqualOrLesserThan(length: number): Continuance<this> {
+  public haveLengthEqualOrLesserThan(length: number): Continuance<this, object> {
     Execute.stuff
       .checkCondition(
         !this.opposite ? Object.keys(this.subject).length <= length : Object.keys(this.subject).length >= length,
@@ -87,13 +87,13 @@ export class ObjectAssertion {
             }'`,
       );
 
-    return new Continuance(this);
+    return new Continuance(this, this.subject);
   }
 
   /**
    * Check if the collection contains null or undefined
    */
-  public containsNullOrUndefined(): Continuance<this> {
+  public containsNullOrUndefined(): Continuance<this, object> {
     let isNullOrUndefined;
 
     try {
@@ -107,7 +107,7 @@ export class ObjectAssertion {
     }
 
     if (!this.opposite ? isNullOrUndefined : !isNullOrUndefined) {
-      return new Continuance(this);
+      return new Continuance(this, this.subject);
     } else {
       Execute.stuff.throwWithMessage(
         !this.opposite
@@ -118,14 +118,14 @@ export class ObjectAssertion {
       );
     }
 
-    return new Continuance(this);
+    return new Continuance(this, this.subject);
   }
 
   /**
    * Check if the collections contains a key
    * @param expectedKey collection key
    */
-  public containsKey(expectedKey: string): Continuance<this> {
+  public containsKey(expectedKey: string): Continuance<this, object> {
     let isContainsProp;
 
     try {
@@ -139,7 +139,7 @@ export class ObjectAssertion {
     }
 
     if (isContainsProp) {
-      return new Continuance(this);
+      return new Continuance(this, this.subject);
     } else {
       Execute.stuff.throwWithMessage(
         !this.opposite
@@ -150,14 +150,14 @@ export class ObjectAssertion {
       );
     }
 
-    return new Continuance(this);
+    return new Continuance(this, this.subject);
   }
 
   /**
    * Check if the object contains key be value based on expression function
    * @param expression expression function
    */
-  public contains(expression: (object: Expression) => boolean): void {
+  public contains(expression: (object: Expression) => boolean): Continuance<this, object> {
     Execute.stuff
       .checkCondition(!this.opposite ? expression(this) : !expression(this))
       .throwWithMessage(
@@ -169,5 +169,7 @@ export class ObjectAssertion {
               this.subject?.valueOf(),
             )}}`,
       );
+
+    return new Continuance(this, this.subject);
   }
 }
