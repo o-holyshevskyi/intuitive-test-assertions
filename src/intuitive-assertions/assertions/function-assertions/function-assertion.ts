@@ -49,6 +49,9 @@ export class FunctionAssertion {
         return new Continuance(this, this.func);
     }
 
+    /**
+     * Check if the function throws an exception
+     */
     public beThrown(): Continuance<this, any> {
         let isThrown = !this.opposite ? false : true;
         
