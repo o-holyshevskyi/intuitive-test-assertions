@@ -180,6 +180,50 @@ str.must().beEmptyOrWhiteSpace(); // the message will be thrown:
 // 'Expected be empty or white space, but found 'Intuitive test assertions''
 ```
 
+## Function
+
+Currently library provides some of asserts for functions. See examples bellow
+
+```TypeScript
+// *.test.ts file
+import 'intuitive-test-assertions';
+
+function foo(): number {
+    return 2;
+}
+
+foo.must().returnsType('number');
+// if you want to verify something opposite, use the not property
+foo.must().not.haveName('bar');
+```
+In the example below we are able to check if the function will be thrown. There are available two ways how you can do it
+
+```TypeScript
+// *.test.ts file
+import { must } from 'intuitive-test-assertions';
+
+// function with parameters
+function foo(a: number): number {
+    if (a > 0) {
+        return a;
+    } else {
+        throw new Error('Test is thrown');
+    }
+}
+
+// must be asserted with following code
+must(() => foo(-1)).beThrown();
+
+// function without parameters
+function bar(): number {
+    return 10;
+}
+
+// can be asserted with both available ways
+must(() => bar()).not.beThrown();
+bar.must().not.beThrown();
+```
+
 ## Multiple assertion statements in one row
 
 If you want to check something with two or more statements in one row use `and` property
