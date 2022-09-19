@@ -1,12 +1,25 @@
-[![npm](https://img.shields.io/npm/v/intuitive-test-assertions?style=plastic)](https://www.npmjs.com/package/intuitive-test-assertions) [![downloads](https://img.shields.io/npm/dw/intuitive-test-assertions?style=plastic)](https://www.npmjs.com/package/intuitive-test-assertions) [![checks](https://img.shields.io/github/checks-status/holyaleks/intuitive-test-assertions/main?style=plastic)](https://github.com/holyaleks/intuitive-test-assertions/actions) [![follow](https://img.shields.io/github/forks/holyaleks/intuitive-test-assertions?style=social)](https://github.com/holyaleks/intuitive-test-assertions)
+<div align="center">
+
+  <a href="">[![git_package](https://img.shields.io/github/package-json/v/holyaleks/intuitive-test-assertions?style=plastic)](https://github.com/holyaleks/intuitive-test-assertions/pkgs/npm/intuitive-test-assertions)</a>
+  <a href="">[![downloads](https://img.shields.io/npm/dw/intuitive-test-assertions?style=plastic)](https://www.npmjs.com/package/intuitive-test-assertions)</a>
+  <a href="">[![checks](https://img.shields.io/github/checks-status/holyaleks/intuitive-test-assertions/main?style=plastic)](https://github.com/holyaleks/intuitive-test-assertions/actions) </a>
+  <a href="">[![follow](https://img.shields.io/github/forks/holyaleks/intuitive-test-assertions?style=social)](https://github.com/holyaleks/intuitive-test-assertions)</a>
+
+</div>
 
 # Intuitive Assertion
+[![npm](https://img.shields.io/npm/v/intuitive-test-assertions?style=plastic)](https://www.npmjs.com/package/intuitive-test-assertions) 
 
 Install the Intuitive test assertions package in your application
 
 ```npm
 npm i intuitive-test-assertions
 ```
+
+# See release
+[![npm](https://img.shields.io/github/v/release/holyaleks/intuitive-test-assertions?style=plastic)](https://github.com/holyaleks/intuitive-test-assertions/releases/tag/v1.1.8)
+
+Release is available for library
 
 # Available assertions
 
