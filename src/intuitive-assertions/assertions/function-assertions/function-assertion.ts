@@ -69,8 +69,8 @@ export class FunctionAssertion {
         )
         .throwWithMessage(
             !this.opposite
-                ?   `Expected function '${this.func.name}' to be thrown`
-                :   `Expected function '${this.func.name}' to not be thrown`
+                ? `Expected the function to be thrown`
+                : `Expected the function to not be thrown`
         );
 
         return new Continuance(this, this.func);

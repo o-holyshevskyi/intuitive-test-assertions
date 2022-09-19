@@ -85,4 +85,8 @@ Function.prototype.must = function (this: Function): FunctionAssertion {
   return new FunctionAssertion(this);
 };
 
+export const must = function (fn: () => any): FunctionAssertion {
+  return new FunctionAssertion(fn);
+};
+
 export {};
