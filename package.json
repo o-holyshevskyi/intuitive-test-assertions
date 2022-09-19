@@ -42,5 +42,8 @@
   },
   "files": [
     "lib/**/*"
-  ]
+  ],
+  "publishConfig": {
+    "@holyaleks:registry": "https://npm.pkg.github.com"
+  }
 }
