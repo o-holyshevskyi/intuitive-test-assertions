@@ -1,4 +1,4 @@
-import '../src/index';
+import { must } from '../src/index';
 
 describe('Positive tests for function assertions', () => {
     test('Test returnsType() method', () => {
@@ -86,7 +86,7 @@ describe('Positive tests for function assertions', () => {
             throw new Error('The foo function is thrown');
         }
 
-        foo.must().beThrown();
+        must(() => foo()).beThrown();
     })
 
     test('Test beThrown() method', () => {
@@ -132,11 +132,15 @@ describe('Negative tests for function assertions', () => {
     })
 
     test('Test beThrown() method', () => {
-        function foo(): number {
-            return 2;
+        function foo(a: number): number {
+            if (a > 0) {
+                return a;
+            } else {
+                throw new Error('Test is thrown');
+            }
         }
 
-        expect(() => foo.must().beThrown()).toThrow('Expected function \'foo\' to be thrown');
+        expect(() => must(() => foo(1)).beThrown()).toThrow('Expected the function to be thrown');
     })
 
     test('Test not.beThrown() method', () => {
@@ -144,6 +148,6 @@ describe('Negative tests for function assertions', () => {
             throw new Error('Test is thrown');
         }
 
-        expect(() => foo.must().not.beThrown()).toThrow('Expected function \'foo\' to not be thrown');
+        expect(() => foo.must().not.beThrown()).toThrow('Expected the function to not be thrown');
     })
 })
