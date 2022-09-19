@@ -1,4 +1,4 @@
-[![npm](https://img.shields.io/npm/v/intuitive-test-assertions?style=plastic)](https://www.npmjs.com/package/intuitive-test-assertions) [![downloads](https://img.shields.io/npm/dw/intuitive-test-assertions?style=plastic)](https://www.npmjs.com/package/intuitive-test-assertions) [![checks](https://img.shields.io/github/checks-status/holyaleks/test-assertion/main?style=plastic)](https://github.com/holyaleks/test-assertion/actions) [![follow](https://img.shields.io/github/forks/holyaleks/test-assertion?style=social)](https://github.com/holyaleks/test-assertion)
+[![npm](https://img.shields.io/npm/v/intuitive-test-assertions?style=plastic)](https://www.npmjs.com/package/intuitive-test-assertions) [![downloads](https://img.shields.io/npm/dw/intuitive-test-assertions?style=plastic)](https://www.npmjs.com/package/intuitive-test-assertions) [![checks](https://img.shields.io/github/checks-status/holyaleks/ntuitive-test-assertions/main?style=plastic)](https://github.com/holyaleks/ntuitive-test-assertions/actions) [![follow](https://img.shields.io/github/forks/holyaleks/ntuitive-test-assertions?style=social)](https://github.com/holyaleks/ntuitive-test-assertions)
 
 # Intuitive Assertion
 
@@ -178,6 +178,50 @@ str.must().match(/.+/gm);
 
 str.must().beEmptyOrWhiteSpace(); // the message will be thrown: 
 // 'Expected be empty or white space, but found 'Intuitive test assertions''
+```
+
+## Function
+
+Currently library provides some of asserts for functions. See examples bellow
+
+```TypeScript
+// *.test.ts file
+import 'intuitive-test-assertions';
+
+function foo(): number {
+    return 2;
+}
+
+foo.must().returnsType('number');
+// if you want to verify something opposite, use the not property
+foo.must().not.haveName('bar');
+```
+In the example below we are able to check if the function will be thrown. There are available two ways how you can do it
+
+```TypeScript
+// *.test.ts file
+import { must } from 'intuitive-test-assertions';
+
+// function with parameters
+function foo(a: number): number {
+    if (a > 0) {
+        return a;
+    } else {
+        throw new Error('Test is thrown');
+    }
+}
+
+// must be asserted with following code
+must(() => foo(-1)).beThrown();
+
+// function without parameters
+function bar(): number {
+    return 10;
+}
+
+// can be asserted with both available ways
+must(() => bar()).not.beThrown();
+bar.must().not.beThrown();
 ```
 
 ## Multiple assertion statements in one row
