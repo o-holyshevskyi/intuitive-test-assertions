@@ -1,5 +1,6 @@
-import { Continuance } from "../../continuance/continuance";
-import { Execute } from "../../executor/execute";
+import { Continuance } from '../../continuance/continuance';
+import { Execute } from '../../executor/execute';
+import { ExpectedResult } from '../expected-result/expected-result';
 
 export class FunctionAssertion {
     constructor(private readonly func: any, private readonly opposite = false) { }
@@ -21,10 +22,10 @@ export class FunctionAssertion {
                 ? typeof this.func() === type
                 : typeof this.func() !== type
         )
-        .throwWithMessage(
+        .throwWithResultMessage(
             !this.opposite
-                ? `Expected function returns type '${type}', but found '${typeof this.func()}'`
-                : `Expected function does not return type '${type}', but found '${typeof this.func()}'`
+                ? ExpectedResult.fail(type, typeof this.func(), 'Expected function returns type \'{0}\', but found \'{1}\'')
+                : ExpectedResult.fail(type, typeof this.func(), 'Expected function does not return type \'{0}\', but found \'{1}\'')
         );
 
         return new Continuance(this, this.func);
@@ -40,10 +41,10 @@ export class FunctionAssertion {
                 ? this.func.name === fooName
                 : this.func.name !== fooName
         )
-        .throwWithMessage(
+        .throwWithResultMessage(
             !this.opposite
-                ? `Expected function has name '${fooName}', but found '${this.func.name}'`
-                : `Expected function does not have name '${fooName}', but found '${this.func.name}'`
+                ? ExpectedResult.fail(fooName, this.func.name, 'Expected function has name \'{0}\', but found \'{1}\'')
+                : ExpectedResult.fail(fooName, this.func.name, 'Expected function does not have name \'{0}\', but found \'{1}\'')
         );
 
         return new Continuance(this, this.func);
@@ -67,10 +68,10 @@ export class FunctionAssertion {
                 ? isThrown
                 : !isThrown
         )
-        .throwWithMessage(
+        .throwWithResultMessage(
             !this.opposite
-                ? `Expected the function to be thrown`
-                : `Expected the function to not be thrown`
+                ? ExpectedResult.fail(undefined, undefined, 'Expected the function to be thrown')
+                : ExpectedResult.fail(undefined, undefined, 'Expected the function to not be thrown')
         );
 
         return new Continuance(this, this.func);

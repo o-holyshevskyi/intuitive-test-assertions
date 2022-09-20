@@ -1,6 +1,7 @@
 import { Continuance } from '../../continuance/continuance';
 import { Execute } from '../../executor/execute';
 import { processArr } from '../../utils/utils';
+import { ExpectedResult } from '../expected-result/expected-result';
 
 export class ArrayAssertion<T> {
   constructor(private readonly array: Array<T>, private readonly opposite = false) {}
@@ -20,13 +21,13 @@ export class ArrayAssertion<T> {
     Execute.stuff
       .checkCondition(
         !this.opposite
-          ? Object(this.array).valueOf() === Object(expected).valueOf()
-          : Object(this.array).valueOf() !== Object(expected).valueOf(),
+          ? this.array === expected
+          : this.array !== expected,
       )
-      .throwWithMessage(
+      .throwWithResultMessage(
         !this.opposite
-          ? `Expected value to be '${JSON.stringify(expected)}', but found '${JSON.stringify(this.array)}'`
-          : `Expected value to not be '${JSON.stringify(expected)}', but found '${JSON.stringify(this.array)}'`,
+          ? ExpectedResult.fail(JSON.stringify(expected), JSON.stringify(this.array), 'Expected value to be \'{0}\', but found \'{1}\'')
+          : ExpectedResult.fail(JSON.stringify(expected), JSON.stringify(this.array), 'Expected value to not be \'{0}\', but found \'{1}\''),
       );
 
     return new Continuance(this, this.array);
@@ -38,12 +39,10 @@ export class ArrayAssertion<T> {
   public beEmpty(): Continuance<this, Array<T>> {
     Execute.stuff
       .checkCondition(!this.opposite ? this.array.length === 0 : this.array.length > 0)
-      .throwWithMessage(
+      .throwWithResultMessage(
         !this.opposite
-          ? `Expected collection to be empty, but found [ ${processArr(this.array)} ] with length '${
-              this.array.length
-            }'`
-          : `Expected collection to not be empty, but found [${processArr(this.array)}]`,
+          ? ExpectedResult.fail(processArr(this.array), this.array.length, 'Expected collection to be empty, but found [ {0} ] with length \'{1}\'')
+          : ExpectedResult.fail(undefined, processArr(this.array), 'Expected collection to not be empty, but found [{1}]'),
       );
 
     return new Continuance(this, this.array);
@@ -56,10 +55,10 @@ export class ArrayAssertion<T> {
   public haveLength(expectedLength: number): Continuance<this, Array<T>> {
     Execute.stuff
       .checkCondition(!this.opposite ? this.array.length === expectedLength : this.array.length !== expectedLength)
-      .throwWithMessage(
+      .throwWithResultMessage(
         !this.opposite
-          ? `Expected collection has length '${expectedLength}', but found '${this.array.length}'`
-          : `Expected collection does not have length '${expectedLength}', but found '${this.array.length}'`,
+          ? ExpectedResult.fail(expectedLength, this.array.length, 'Expected collection has length \'{0}\', but found \'{1}\'')
+          : ExpectedResult.fail(expectedLength, this.array.length, 'Expected collection does not have length \'{0}\', but found \'{1}\''),
       );
 
     return new Continuance(this, this.array);
@@ -72,10 +71,10 @@ export class ArrayAssertion<T> {
   public haveLengthEqualOrGreaterThan(expectedLength: number): Continuance<this, Array<T>> {
     Execute.stuff
       .checkCondition(!this.opposite ? this.array.length >= expectedLength : this.array.length <= expectedLength)
-      .throwWithMessage(
+      .throwWithResultMessage(
         !this.opposite
-          ? `Expected collection has length equal or greater than '${expectedLength}', but found '${this.array.length}'`
-          : `Expected collection does not have length equal or greater than '${expectedLength}', but found '${this.array.length}'`,
+          ? ExpectedResult.fail(expectedLength, this.array.length, 'Expected collection has length equal or greater than \'{0}\', but found \'{1}\'')
+          : ExpectedResult.fail(expectedLength, this.array.length, 'Expected collection does not have length equal or greater than \'{0}\', but found \'{1}\''),
       );
 
     return new Continuance(this, this.array);
@@ -88,10 +87,10 @@ export class ArrayAssertion<T> {
   public haveLengthEqualOrLesserThan(expectedLength: number): Continuance<this, Array<T>> {
     Execute.stuff
       .checkCondition(!this.opposite ? this.array.length <= expectedLength : this.array.length >= expectedLength)
-      .throwWithMessage(
+      .throwWithResultMessage(
         !this.opposite
-          ? `Expected collection has length equal or lesser than '${expectedLength}', but found '${this.array.length}'`
-          : `Expected collection does not have length equal or lesser than '${expectedLength}', but found '${this.array.length}'`,
+          ? ExpectedResult.fail(expectedLength, this.array.length, 'Expected collection has length equal or lesser than \'{0}\', but found \'{1}\'')
+          : ExpectedResult.fail(expectedLength, this.array.length, 'Expected collection does not have length equal or lesser than \'{0}\', but found \'{1}\''),
       );
 
     return new Continuance(this, this.array);
@@ -119,10 +118,10 @@ export class ArrayAssertion<T> {
     } else {
       Execute.stuff
         .checkCondition(false)
-        .throwWithMessage(
+        .throwWithResultMessage(
           !this.opposite
-            ? `Expected collection contains '${typeof type}', but found [ ${processArr(this.array)} ]`
-            : `Expected collection does not contain '${typeof type}', but found [ ${processArr(this.array)} ]`,
+            ? ExpectedResult.fail(typeof type, processArr(this.array), 'Expected collection contains \'{0}\', but found [ {1} ]')
+            : ExpectedResult.fail(typeof type, processArr(this.array), 'Expected collection does not contain \'{0}\', but found [ {1} ]'),
         );
     }
 
@@ -164,10 +163,10 @@ export class ArrayAssertion<T> {
 
     Execute.stuff
       .checkCondition(startsWith)
-      .throwWithMessage(
+      .throwWithResultMessage(
         !this.opposite
-          ? `Expected collection starts with [ ${processArr(arr)} ], but found [ ${processArr(this.array)} ]`
-          : `Expected collection does not start with [ ${processArr(arr)} ], but found [ ${processArr(this.array)} ]`,
+          ? ExpectedResult.fail(processArr(arr), processArr(this.array), 'Expected collection starts with [ {0} ], but found [ {1} ]')
+          : ExpectedResult.fail(processArr(arr), processArr(this.array), 'Expected collection does not start with [ {0} ], but found [ {1} ]'),
       );
 
     return new Continuance(this, this.array);
@@ -211,10 +210,10 @@ export class ArrayAssertion<T> {
 
     Execute.stuff
       .checkCondition(endsWith)
-      .throwWithMessage(
+      .throwWithResultMessage(
         !this.opposite
-          ? `Expected collection ends with [ ${processArr(arr)} ], but found [ ${processArr(this.array)} ]`
-          : `Expected collection does not end with [ ${processArr(arr)} ], but found [ ${processArr(this.array)} ]`,
+          ? ExpectedResult.fail(processArr(arr), processArr(this.array), 'Expected collection ends with [ {0} ], but found [ {1} ]')
+          : ExpectedResult.fail(processArr(arr), processArr(this.array), 'Expected collection does not end with [ {0} ], but found [ {1} ]'),
       );
 
     return new Continuance(this, this.array);
@@ -261,10 +260,10 @@ export class ArrayAssertion<T> {
 
     Execute.stuff
       .checkCondition(isSortedInASC)
-      .throwWithMessage(
+      .throwWithResultMessage(
         !this.opposite
-          ? `Expected collection to be sorted in ASC, but found [ ${processArr(this.array)} ]`
-          : `Expected collection to not be sorted in ASC, but found [ ${processArr(this.array)} ]`,
+          ? ExpectedResult.fail(undefined, processArr(this.array), 'Expected collection to be sorted in ASC, but found [ {1} ]')
+          : ExpectedResult.fail(undefined, processArr(this.array), 'Expected collection to not be sorted in ASC, but found [ {1} ]'),
       );
 
     return new Continuance(this, this.array);
@@ -313,10 +312,10 @@ export class ArrayAssertion<T> {
 
     Execute.stuff
       .checkCondition(isSortedInASC)
-      .throwWithMessage(
+      .throwWithResultMessage(
         !this.opposite
-          ? `Expected collection to be sorted in DESC, but found [ ${processArr(this.array)} ]`
-          : `Expected collection to not be sorted in DESC, but found [ ${processArr(this.array)} ]`,
+          ? ExpectedResult.fail(undefined, processArr(this.array), 'Expected collection to be sorted in DESC, but found [ {1} ]')
+          : ExpectedResult.fail(undefined, processArr(this.array), 'Expected collection to not be sorted in DESC, but found [ {1} ]'),
       );
 
     return new Continuance(this, this.array);
@@ -329,10 +328,10 @@ export class ArrayAssertion<T> {
   public contains(arrValue: any): Continuance<this, Array<T>> {
     Execute.stuff
       .checkCondition(!this.opposite ? this.array.includes(arrValue) : !this.array.includes(arrValue))
-      .throwWithMessage(
+      .throwWithResultMessage(
         !this.opposite
-          ? `Expected collection contains '${arrValue}', but found [ ${processArr(this.array)} ]`
-          : `Expected collection does not contain '${arrValue}', but found [ ${processArr(this.array)} ]`,
+          ? ExpectedResult.fail(arrValue, processArr(this.array), 'Expected collection contains \'{0}\', but found [ {1} ]')
+          : ExpectedResult.fail(arrValue, processArr(this.array), 'Expected collection does not contain \'{0}\', but found [ {1} ]'),
       );
 
     return new Continuance(this, this.array);
@@ -351,10 +350,10 @@ export class ArrayAssertion<T> {
 
     Execute.stuff
       .checkCondition(!this.opposite ? isEqual : !isEqual)
-      .throwWithMessage(
+      .throwWithResultMessage(
         !this.opposite
-          ? `Expected collection equals to [ ${processArr(arr)} ], but found [ ${processArr(this.array)} ]`
-          : `Expected collection does not equals to [ ${processArr(arr)} ], but found [ ${processArr(this.array)} ]`,
+          ? ExpectedResult.fail(processArr(arr), processArr(this.array), 'Expected collection equals to [ {0} ], but found [ {1} ]')
+          : ExpectedResult.fail(processArr(arr), processArr(this.array), 'Expected collection does not equals to [ {0} ], but found [ {1} ]'),
       );
 
     return new Continuance(this, this.array);
@@ -367,10 +366,10 @@ export class ArrayAssertion<T> {
   public haveSameLengthAs(arr: Array<any>): Continuance<this, Array<T>> {
     Execute.stuff
       .checkCondition(!this.opposite ? this.array.length === arr.length : this.array.length !== arr.length)
-      .throwWithMessage(
+      .throwWithResultMessage(
         !this.opposite
-          ? `Expected collection has length '${arr.length}', but found '${this.array.length}'`
-          : `Expected collection does not have length '${arr.length}', but found '${this.array.length}'`,
+          ? ExpectedResult.fail(arr.length, this.array.length, 'Expected collection has length \'{0}\', but found \'{1}\'')
+          : ExpectedResult.fail(arr.length, this.array.length, 'Expected collection does not have length \'{0}\', but found \'{1}\''),
       );
 
     return new Continuance(this, this.array);

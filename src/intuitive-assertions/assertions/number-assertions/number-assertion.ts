@@ -1,5 +1,6 @@
 import { Execute } from '../../executor/execute';
 import { Continuance } from '../../continuance/continuance';
+import { ExpectedResult } from '../expected-result/expected-result';
 
 export class NumberAssertion {
   constructor(private readonly value: number, private readonly opposite = false) {}
@@ -19,13 +20,13 @@ export class NumberAssertion {
     Execute.stuff
       .checkCondition(
         !this.opposite
-          ? Object(this.value).valueOf() === Object(expected).valueOf()
-          : Object(this.value).valueOf() !== Object(expected).valueOf(),
+          ? this.value === expected
+          : this.value !== expected,
       )
-      .throwWithMessage(
+      .throwWithResultMessage(
         !this.opposite
-          ? `Expected value to be '${JSON.stringify(expected)}', but found '${JSON.stringify(this.value)}'`
-          : `Expected value to not be '${JSON.stringify(expected)}', but found '${JSON.stringify(this.value)}'`,
+          ? ExpectedResult.fail(expected, this.value, 'Expected value to be \'{0}\', but found \'{1}\'')
+          : ExpectedResult.fail(expected, this.value, 'Expected value to not be \'{0}\', but found \'{1}\''),
       );
 
     return new Continuance(this, this.value);
@@ -37,14 +38,14 @@ export class NumberAssertion {
   public bePositive(): Continuance<this, number> {
     Execute.stuff
       .checkCondition(!this.opposite ? this.value > 0 : this.value < 0)
-      .throwWithMessage(
+      .throwWithResultMessage(
         !this.opposite
           ? this.value === 0
-            ? `Expected positive value, but value '${this.value}' equal to 0`
-            : `Expected positive value, but value '${this.value}' is lesser than 0`
+            ? ExpectedResult.fail(undefined, this.value, 'Expected positive value, but value \'{1}\' equal to 0')
+            : ExpectedResult.fail(undefined, this.value, 'Expected positive value, but value \'{1}\' is lesser than 0')
           : this.value === 0
-          ? `Expected not positive value, but value '${this.value}' equal to 0`
-          : `Expected not positive value, but value '${this.value}' is greater than 0`,
+          ? ExpectedResult.fail(undefined, this.value, 'Expected not positive value, but value \'{1}\' equal to 0')
+          : ExpectedResult.fail(undefined, this.value, 'Expected not positive value, but value \'{1}\' is greater than 0'),
       );
 
     return new Continuance(this, this.value);
@@ -56,14 +57,14 @@ export class NumberAssertion {
   public beNegative(): Continuance<this, number> {
     Execute.stuff
       .checkCondition(!this.opposite ? this.value < 0 : this.value > 0)
-      .throwWithMessage(
+      .throwWithResultMessage(
         !this.opposite
-          ? this.value === 0
-            ? `Expected negative value, but value '${this.value}' equal to 0`
-            : `Expected negative value, but value '${this.value}' is greater than 0`
-          : this.value === 0
-          ? `Expected not negative value, but value '${this.value}' equal to 0`
-          : `Expected not negative value, but value '${this.value}' is lesser than 0`,
+        ? this.value === 0
+        ? ExpectedResult.fail(undefined, this.value, 'Expected negative value, but value \'{1}\' equal to 0')
+        : ExpectedResult.fail(undefined, this.value, 'Expected negative value, but value \'{1}\' is greater than 0')
+      : this.value === 0
+      ? ExpectedResult.fail(undefined, this.value, 'Expected not negative value, but value \'{1}\' equal to 0')
+      : ExpectedResult.fail(undefined, this.value, 'Expected not negative value, but value \'{1}\' is lesser than 0'),
       );
 
     return new Continuance(this, this.value);
@@ -78,10 +79,10 @@ export class NumberAssertion {
       .checkCondition(
         !this.opposite ? this.value > Number(expected).valueOf() : this.value < Number(expected).valueOf(),
       )
-      .throwWithMessage(
+      .throwWithResultMessage(
         !this.opposite
-          ? `Expected a value '${this.value}' be greater than '${expected}', but value is lesser`
-          : `Expected a value '${this.value}' not be greater than '${expected}', but value is greater`,
+          ? ExpectedResult.fail(expected, this.value, 'Expected a value \'{1}\' be greater than \'{0}\', but value is lesser')
+          : ExpectedResult.fail(expected, this.value, 'Expected a value \'{1}\' not be greater than \'{0}\', but value is greater'),
       );
 
     return new Continuance(this, this.value);
@@ -96,10 +97,10 @@ export class NumberAssertion {
       .checkCondition(
         !this.opposite ? this.value < Number(expected).valueOf() : this.value > Number(expected).valueOf(),
       )
-      .throwWithMessage(
+      .throwWithResultMessage(
         !this.opposite
-          ? `Expected a value '${this.value}' be lesser than '${expected}', but value is greater`
-          : `Expected a value '${this.value}' not be lesser than '${expected}', but value is lesser`,
+          ? ExpectedResult.fail(expected, this.value, 'Expected a value \'{1}\' be lesser than \'{0}\', but value is greater')
+          : ExpectedResult.fail(expected, this.value, 'Expected a value \'{1}\' not be lesser than \'{0}\', but value is lesser'),
       );
 
     return new Continuance(this, this.value);
@@ -114,10 +115,10 @@ export class NumberAssertion {
       .checkCondition(
         !this.opposite ? this.value >= Number(expected).valueOf() : this.value <= Number(expected).valueOf(),
       )
-      .throwWithMessage(
+      .throwWithResultMessage(
         !this.opposite
-          ? `Expected a value '${this.value}' greater or equal to '${expected}', but value is lesser`
-          : `Expected a value '${this.value}' not be greater or equal to '${expected}', but value is lesser`,
+          ? ExpectedResult.fail(expected, this.value, 'Expected a value \'{1}\' greater or equal to \'{0}\', but value is lesser')
+          : ExpectedResult.fail(expected, this.value, 'Expected a value \'{1}\' not be greater or equal to \'{0}\', but value is lesser'),
       );
 
     return new Continuance(this, this.value);
@@ -132,10 +133,10 @@ export class NumberAssertion {
       .checkCondition(
         !this.opposite ? this.value <= Number(expected).valueOf() : this.value >= Number(expected).valueOf(),
       )
-      .throwWithMessage(
+      .throwWithResultMessage(
         !this.opposite
-          ? `Expected a value '${this.value}' lesser or equal to '${expected}', but value is greater`
-          : `Expected a value '${this.value}' not be lesser or equal to '${expected}', but value is greater`,
+          ? ExpectedResult.fail(expected, this.value, 'Expected a value \'{1}\' lesser or equal to \'{0}\', but value is greater')
+          : ExpectedResult.fail(expected, this.value, 'Expected a value \'{1}\' not be lesser or equal to \'{0}\', but value is greater'),
       );
 
     return new Continuance(this, this.value);
@@ -153,10 +154,10 @@ export class NumberAssertion {
           ? this.value >= Number(rangeStart).valueOf() && this.value <= Number(rangeEnd).valueOf()
           : this.value <= Number(rangeStart).valueOf() || this.value >= Number(rangeEnd).valueOf(),
       )
-      .throwWithMessage(
+      .throwWithResultMessage(
         !this.opposite
-          ? `Expected value '${this.value}' to be between '${rangeStart}' and '${rangeEnd}', but value is out of this range`
-          : `Expected value '${this.value}' to not be between '${rangeStart}' and '${rangeEnd}', but value is in this range`,
+          ? ExpectedResult.fail(`between '${rangeStart}' and '${rangeEnd}'`, this.value, 'Expected value \'{1}\' to be {0}, but value is out of this range')
+          : ExpectedResult.fail(`between '${rangeStart}' and '${rangeEnd}'`, this.value, 'Expected value \'{1}\' to not be {0}, but value is in this range'),
       );
 
     return new Continuance(this, this.value);
@@ -168,10 +169,10 @@ export class NumberAssertion {
   public beInteger(): Continuance<this, number> {
     Execute.stuff
       .checkCondition(!this.opposite ? Number.isInteger(this.value) : !Number.isInteger(this.value))
-      .throwWithMessage(
+      .throwWithResultMessage(
         !this.opposite
-          ? `Expected value '${this.value}' to be integer, but value has fraction`
-          : `Expected value '${this.value}' to be fraction, but value is integer`,
+          ? ExpectedResult.fail(undefined, this.value, 'Expected value \'{1}\' to be integer, but value has fraction')
+          : ExpectedResult.fail(undefined, this.value, 'Expected value \'{1}\' to be fraction, but value is integer'),
       );
 
     return new Continuance(this, this.value);

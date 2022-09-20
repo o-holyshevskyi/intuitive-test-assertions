@@ -1,5 +1,6 @@
 import { Execute } from '../../executor/execute';
 import { Continuance } from '../../continuance/continuance';
+import { ExpectedResult } from '../expected-result/expected-result';
 
 export class BooleanAssertion {
   constructor(private readonly value: boolean, private readonly opposite = false) {}
@@ -19,13 +20,13 @@ export class BooleanAssertion {
     Execute.stuff
       .checkCondition(
         !this.opposite
-          ? Object(this.value).valueOf() === Object(expected).valueOf()
-          : Object(this.value).valueOf() !== Object(expected).valueOf(),
+          ? this.value === expected
+          : this.value !== expected,
       )
-      .throwWithMessage(
+      .throwWithResultMessage(
         !this.opposite
-          ? `Expected value to be '${JSON.stringify(expected)}', but found '${JSON.stringify(this.value)}'`
-          : `Expected value to not be '${JSON.stringify(expected)}', but found '${JSON.stringify(this.value)}'`,
+          ? ExpectedResult.fail(expected, this.value, 'Expected value to be \'{0}\', but found \'{1}\'')
+          : ExpectedResult.fail(expected, this.value, 'Expected value to not be \'{0}\', but found \'{1}\''),
       );
 
     return new Continuance(this, this.value);
@@ -37,10 +38,10 @@ export class BooleanAssertion {
   public beTrue(): Continuance<this, any> {
     Execute.stuff
       .checkCondition(!this.opposite ? this.value === true : this.value !== true)
-      .throwWithMessage(
+      .throwWithResultMessage(
         !this.opposite
-          ? `Expected value to be 'True', but found '${this.value}'`
-          : `Expected value to not be 'True', but found '${this.value}'`,
+          ? ExpectedResult.fail(true, this.value, 'Expected value to be \'{0}\', but found \'{1}\'')
+          : ExpectedResult.fail(true, this.value, 'Expected value to not be \'{0}\', but found \'{1}\''),
       );
 
     return new Continuance(this, this.value);
@@ -52,10 +53,10 @@ export class BooleanAssertion {
   public beFalse(): Continuance<this, any> {
     Execute.stuff
       .checkCondition(!this.opposite ? this.value === false : this.value !== false)
-      .throwWithMessage(
+      .throwWithResultMessage(
         !this.opposite
-          ? `Expected value to be 'False', but found '${this.value}'`
-          : `Expected value to not be 'False', but found '${this.value}'`,
+          ? ExpectedResult.fail(false, this.value, 'Expected value to be \'{0}\', but found \'{1}\'')
+          : ExpectedResult.fail(false, this.value, 'Expected value to not be \'{0}\', but found \'{1}\''),
       );
 
     return new Continuance(this, this.value);
