@@ -1,6 +1,7 @@
 import { Continuance } from '../../continuance/continuance';
 import { Execute } from '../../executor/execute';
 import { processArr } from '../../utils/utils';
+import { ExpectedResult } from '../expected-result/expected-result';
 
 export class DateAssertion {
   constructor(private readonly value: Date, private readonly opposite = false) {}
@@ -20,13 +21,13 @@ export class DateAssertion {
     Execute.stuff
       .checkCondition(
         !this.opposite
-          ? Object(this.value).valueOf() === Object(expected).valueOf()
-          : Object(this.value).valueOf() !== Object(expected).valueOf(),
+          ? this.value === expected
+          : this.value !== expected,
       )
-      .throwWithMessage(
+      .throwWithResultMessage(
         !this.opposite
-          ? `Expected value to be '${JSON.stringify(expected)}', but found '${JSON.stringify(this.value)}'`
-          : `Expected value to not be '${JSON.stringify(expected)}', but found '${JSON.stringify(this.value)}'`,
+          ? ExpectedResult.fail(expected.toISOString(), this.value.toISOString(), 'Expected value to be \'{0}\', but found \'{1}\'')
+          : ExpectedResult.fail(expected.toISOString(), this.value.toISOString(), 'Expected value to not be \'{0}\', but found \'{1}\''),
       );
 
     return new Continuance(this, this.value);
@@ -39,10 +40,10 @@ export class DateAssertion {
   public beAfter(expectedDate: Date): Continuance<this, Date> {
     Execute.stuff
       .checkCondition(!this.opposite ? this.value > expectedDate : this.value < expectedDate)
-      .throwWithMessage(
+      .throwWithResultMessage(
         !this.opposite
-          ? `Expected date be after '${expectedDate.toISOString()}', but found '${this.value.toISOString()}'`
-          : `Expected date not be after '${expectedDate.toISOString()}', but found '${this.value.toISOString()}'`,
+          ? ExpectedResult.fail(expectedDate.toISOString(), this.value.toISOString(), 'Expected date be after \'{0}\', but found \'{1}\'')
+          : ExpectedResult.fail(expectedDate.toISOString(), this.value.toISOString(), 'Expected date not be after \'{0}\', but found \'{1}\''),
       );
 
     return new Continuance(this, this.value);
@@ -55,10 +56,10 @@ export class DateAssertion {
   public beBefore(expectedDate: Date): Continuance<this, Date> {
     Execute.stuff
       .checkCondition(!this.opposite ? this.value < expectedDate : this.value > expectedDate)
-      .throwWithMessage(
+      .throwWithResultMessage(
         !this.opposite
-          ? `Expected date be before '${expectedDate.toISOString()}', but found '${this.value.toISOString()}'`
-          : `Expected date not be before '${expectedDate.toISOString()}', but found '${this.value.toISOString()}'`,
+          ? ExpectedResult.fail(expectedDate.toISOString(), this.value.toISOString(), 'Expected date be before \'{0}\', but found \'{1}\'')
+          : ExpectedResult.fail(expectedDate.toISOString(), this.value.toISOString(), 'Expected date not be before \'{0}\', but found \'{1}\''),
       );
 
     return new Continuance(this, this.value);
@@ -71,10 +72,10 @@ export class DateAssertion {
   public beOnOrAfter(expectedDate: Date): Continuance<this, Date> {
     Execute.stuff
       .checkCondition(!this.opposite ? this.value >= expectedDate : this.value <= expectedDate)
-      .throwWithMessage(
+      .throwWithResultMessage(
         !this.opposite
-          ? `Expected date be on or after '${expectedDate.toISOString()}', but found '${this.value.toISOString()}'`
-          : `Expected date not be on or after '${expectedDate.toISOString()}', but found '${this.value.toISOString()}'`,
+          ? ExpectedResult.fail(expectedDate.toISOString(), this.value.toISOString(), 'Expected date be on or after \'{0}\', but found \'{1}\'')
+          : ExpectedResult.fail(expectedDate.toISOString(), this.value.toISOString(), 'Expected date not be on or after \'{0}\', but found \'{1}\''),
       );
 
     return new Continuance(this, this.value);
@@ -87,10 +88,10 @@ export class DateAssertion {
   public beOnOrBefore(expectedDate: Date): Continuance<this, Date> {
     Execute.stuff
       .checkCondition(!this.opposite ? this.value <= expectedDate : this.value >= expectedDate)
-      .throwWithMessage(
+      .throwWithResultMessage(
         !this.opposite
-          ? `Expected date be on or before '${expectedDate.toISOString()}', but found '${this.value.toISOString()}'`
-          : `Expected date not be on or before '${expectedDate.toISOString()}', but found '${this.value.toISOString()}'`,
+          ? ExpectedResult.fail(expectedDate.toISOString(), this.value.toISOString(), 'Expected date be on or before \'{0}\', but found \'{1}\'')
+          : ExpectedResult.fail(expectedDate.toISOString(), this.value.toISOString(), 'Expected date not be on or before \'{0}\', but found \'{1}\''),
       );
 
     return new Continuance(this, this.value);
@@ -105,10 +106,10 @@ export class DateAssertion {
 
     Execute.stuff
       .checkCondition(!this.opposite ? actualYear === year : actualYear !== year)
-      .throwWithMessage(
+      .throwWithResultMessage(
         !this.opposite
-          ? `Expected year equals to '${year}', but found '${actualYear}'`
-          : `Expected year not equals to '${year}', but found '${actualYear}'`,
+          ? ExpectedResult.fail(year, actualYear, 'Expected year equals to \'{0}\', but found \'{1}\'')
+          : ExpectedResult.fail(year, actualYear, 'Expected year not equals to \'{0}\', but found \'{1}\''),
       );
 
     return new Continuance(this, this.value);
@@ -123,10 +124,10 @@ export class DateAssertion {
 
     Execute.stuff
       .checkCondition(!this.opposite ? actualMonth === month : actualMonth !== month)
-      .throwWithMessage(
+      .throwWithResultMessage(
         !this.opposite
-          ? `Expected month equals to '${month}', but found '${actualMonth}'`
-          : `Expected month not equals to '${month}', but found '${actualMonth}'`,
+          ? ExpectedResult.fail(month, actualMonth, 'Expected month equals to \'{0}\', but found \'{1}\'')
+          : ExpectedResult.fail(month, actualMonth, 'Expected month not equals to \'{0}\', but found \'{1}\''),
       );
 
     return new Continuance(this, this.value);
@@ -141,10 +142,10 @@ export class DateAssertion {
 
     Execute.stuff
       .checkCondition(!this.opposite ? actualDate === date : actualDate !== date)
-      .throwWithMessage(
+      .throwWithResultMessage(
         !this.opposite
-          ? `Expected day of the month equals to '${date}', but found '${actualDate}'`
-          : `Expected day of the month not equals to '${date}', but found '${actualDate}'`,
+          ? ExpectedResult.fail(date, actualDate, 'Expected day of the month equals to \'{0}\', but found \'{1}\'')
+          : ExpectedResult.fail(date, actualDate, 'Expected day of the month not equals to \'{0}\', but found \'{1}\''),
       );
 
     return new Continuance(this, this.value);
@@ -159,10 +160,10 @@ export class DateAssertion {
 
     Execute.stuff
       .checkCondition(!this.opposite ? actualDay === day : actualDay !== day)
-      .throwWithMessage(
+      .throwWithResultMessage(
         !this.opposite
-          ? `Expected day of the week equals to '${day}', but found '${actualDay}'`
-          : `Expected day of the week not equals to '${day}', but found '${actualDay}'`,
+          ? ExpectedResult.fail(day, actualDay, 'Expected day of the week equals to \'{0}\', but found \'{1}\'')
+          : ExpectedResult.fail(day, actualDay, 'Expected day of the week not equals to \'{0}\', but found \'{1}\''),
       );
 
     return new Continuance(this, this.value);
@@ -177,10 +178,10 @@ export class DateAssertion {
 
     Execute.stuff
       .checkCondition(!this.opposite ? actualHours === hours : actualHours !== hours)
-      .throwWithMessage(
+      .throwWithResultMessage(
         !this.opposite
-          ? `Expected hours equals to '${hours}', but found '${actualHours}'`
-          : `Expected hours not equals to '${hours}', but found '${actualHours}'`,
+          ? ExpectedResult.fail(hours, actualHours, 'Expected hours equals to \'{0}\', but found \'{1}\'')
+          : ExpectedResult.fail(hours, actualHours, 'Expected hours not equals to \'{0}\', but found \'{1}\''),
       );
 
     return new Continuance(this, this.value);
@@ -195,10 +196,10 @@ export class DateAssertion {
 
     Execute.stuff
       .checkCondition(!this.opposite ? actualMinutes === minutes : actualMinutes !== minutes)
-      .throwWithMessage(
+      .throwWithResultMessage(
         !this.opposite
-          ? `Expected minutes equals to '${minutes}', but found '${actualMinutes}'`
-          : `Expected minutes not equals to '${minutes}', but found '${actualMinutes}'`,
+          ? ExpectedResult.fail(minutes, actualMinutes, 'Expected minutes equals to \'{0}\', but found \'{1}\'')
+          : ExpectedResult.fail(minutes, actualMinutes, 'Expected minutes not equals to \'{0}\', but found \'{1}\''),
       );
 
     return new Continuance(this, this.value);
@@ -213,10 +214,10 @@ export class DateAssertion {
 
     Execute.stuff
       .checkCondition(!this.opposite ? actualSeconds === seconds : actualSeconds !== seconds)
-      .throwWithMessage(
+      .throwWithResultMessage(
         !this.opposite
-          ? `Expected seconds equals to '${seconds}', but found '${actualSeconds}'`
-          : `Expected seconds not equals to '${seconds}', but found '${actualSeconds}'`,
+          ? ExpectedResult.fail(seconds, actualSeconds, 'Expected seconds equals to \'{0}\', but found \'{1}\'')
+          : ExpectedResult.fail(seconds, actualSeconds, 'Expected seconds not equals to \'{0}\', but found \'{1}\''),
       );
 
     return new Continuance(this, this.value);
@@ -234,10 +235,10 @@ export class DateAssertion {
           ? this.value >= startDate && this.value <= endDate
           : this.value <= startDate || this.value >= endDate,
       )
-      .throwWithMessage(
+      .throwWithResultMessage(
         !this.opposite
-          ? `Expected '${this.value.toLocaleDateString()}' to be from '${startDate.toLocaleDateString()}' to '${endDate.toLocaleDateString()}', but value is out of this range`
-          : `Expected '${this.value.toLocaleDateString()}' to be before '${startDate.toLocaleDateString()}' or after '${endDate.toLocaleDateString()}', but value is in of this range`,
+          ? ExpectedResult.fail(`from '${startDate.toLocaleDateString()}' to '${endDate.toLocaleDateString()}'`, this.value.toLocaleDateString(), 'Expected \'{1}\' to be {0}, but value is out of this range')
+          : ExpectedResult.fail(`before '${startDate.toLocaleDateString()}' or after '${endDate.toLocaleDateString()}'`, this.value.toLocaleDateString(), 'Expected \'{1}\' to be {0}, but value is in of this range'),
       );
 
     return new Continuance(this, this.value);
@@ -252,10 +253,10 @@ export class DateAssertion {
 
     Execute.stuff
       .checkCondition(!this.opposite ? actualTimestamp === timestamp : actualTimestamp !== timestamp)
-      .throwWithMessage(
+      .throwWithResultMessage(
         !this.opposite
-          ? `Expected date precisely equals to '${timestamp}', but found ${actualTimestamp}`
-          : `Expected date precisely not equals to '${timestamp}', but found ${actualTimestamp}`,
+          ? ExpectedResult.fail(timestamp, actualTimestamp, 'Expected date precisely equals to \'{0}\', but found \'{1}\'')
+          : ExpectedResult.fail(timestamp, actualTimestamp, 'Expected date precisely not equals to \'{0}\', but found \'{1}\''),
       );
 
     return new Continuance(this, this.value);
@@ -270,14 +271,10 @@ export class DateAssertion {
 
     Execute.stuff
       .checkCondition(!this.opposite ? isOneOf : !isOneOf)
-      .throwWithMessage(
+      .throwWithResultMessage(
         !this.opposite
-          ? `Expected date be at least one of '${processArr(
-              expectedDatesArray,
-            )}', but found '${this.value.toLocaleDateString()}'`
-          : `Expected date not be one of '${processArr(
-              expectedDatesArray,
-            )}', but found '${this.value.toLocaleDateString()}'`,
+          ? ExpectedResult.fail(processArr(expectedDatesArray), this.value.toLocaleDateString(), 'Expected date be at least one of \'{0}\', but found \'{1}\'')
+          : ExpectedResult.fail(processArr(expectedDatesArray), this.value.toLocaleDateString(), 'Expected date not be one of \'{0}\', but found \'{1}\''),
       );
 
     return new Continuance(this, this.value);

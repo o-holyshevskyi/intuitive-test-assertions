@@ -126,12 +126,12 @@ describe('Negative tests for object type', () => {
     test('Test contains() method', () => {
         const obj = { firstElement: 1, secondElement: 2, thirdElement: 3 };
 
-        expect(() => obj.must().contains((obj) => obj.subject.firstElement === 5 )).toThrow('Expected collection contains { obj.subject.firstElement === 5; }, but found {\"firstElement\":1,\"secondElement\":2,\"thirdElement\":3}}');
+        expect(() => obj.must().contains((obj) => obj.subject.firstElement === 5 )).toThrow('Expected collection contains { obj.subject.firstElement === 5; }, but found {\"firstElement\":1,\"secondElement\":2,\"thirdElement\":3}');
     })
 
     test('Test notContain() method', () => {
         const obj = { firstElement: 1, secondElement: 2, thirdElement: 3 };
 
-        expect(() => obj.must().not.contains((obj) => obj.subject.firstElement === 1 )).toThrow('Expected collection does not contain { obj.subject.firstElement === 1; }, but found {\"firstElement\":1,\"secondElement\":2,\"thirdElement\":3}}');
+        expect(() => obj.must().not.contains((obj) => obj.subject.firstElement === 1 )).toThrow('Expected collection does not contain { obj.subject.firstElement === 1; }, but found {\"firstElement\":1,\"secondElement\":2,\"thirdElement\":3}');
     })
 })

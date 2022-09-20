@@ -1,5 +1,6 @@
 import { Continuance } from '../../continuance/continuance';
 import { Execute } from '../../executor/execute';
+import { ExpectedResult } from '../expected-result/expected-result';
 
 export class StringAssertion {
   constructor(private readonly value: string, private readonly opposite = false) {}
@@ -19,13 +20,13 @@ export class StringAssertion {
     Execute.stuff
       .checkCondition(
         !this.opposite
-          ? Object(this.value).valueOf() === Object(expected).valueOf()
-          : Object(this.value).valueOf() !== Object(expected).valueOf(),
+          ? this.value === expected
+          : this.value !== expected,
       )
-      .throwWithMessage(
+      .throwWithResultMessage(
         !this.opposite
-          ? `Expected value to be '${JSON.stringify(expected)}', but found '${JSON.stringify(this.value)}'`
-          : `Expected value to not be '${JSON.stringify(expected)}', but found '${JSON.stringify(this.value)}'`,
+          ? ExpectedResult.fail(expected, this.value, 'Expected value to be \'{0}\', but found \'{1}\'')
+          : ExpectedResult.fail(expected, this.value, 'Expected value to not be \'{0}\', but found \'{1}\''),
       );
 
     return new Continuance(this, this.value);
@@ -39,10 +40,10 @@ export class StringAssertion {
       .checkCondition(
         !this.opposite ? this.value.length === 0 || this.value === ' ' : this.value.length > 0 || this.value === ' ',
       )
-      .throwWithMessage(
+      .throwWithResultMessage(
         !this.opposite
-          ? `Expected be empty or white space, but found '${this.value}'`
-          : `Expected not be empty or white space, but found '${this.value}'`,
+          ? ExpectedResult.fail(undefined, this.value, 'Expected be empty or white space, but found \'{1}\'')
+          : ExpectedResult.fail(undefined, this.value, 'Expected not be empty or white space, but found \'{1}\''),
       );
 
     return new Continuance(this, this.value);
@@ -55,10 +56,10 @@ export class StringAssertion {
   public contains(expected: string): Continuance<this, string> {
     Execute.stuff
       .checkCondition(!this.opposite ? this.value.includes(expected) : !this.value.includes(expected))
-      .throwWithMessage(
+      .throwWithResultMessage(
         !this.opposite
-          ? `Expected the '${this.value}' contains '${expected}'`
-          : `Expected the '${this.value}' does not contain '${expected}'`,
+          ? ExpectedResult.fail(expected, this.value, 'Expected the \'{1}\' contains \'{0}\'')
+          : ExpectedResult.fail(expected, this.value, 'Expected the \'{1}\' does not contain \'{0}\''),
       );
 
     return new Continuance(this, this.value);
@@ -72,10 +73,10 @@ export class StringAssertion {
     expectedStringArray.forEach((expectedString) => {
       Execute.stuff
         .checkCondition(!this.opposite ? this.value.includes(expectedString) : !this.value.includes(expectedString))
-        .throwWithMessage(
+        .throwWithResultMessage(
           !this.opposite
-            ? `Expected the '${this.value}' contains '${expectedString}'`
-            : `Expected the '${this.value}' does not contain '${expectedString}'`,
+            ? ExpectedResult.fail(expectedString, this.value, 'Expected the \'{1}\' contains \'{0}\'')
+            : ExpectedResult.fail(expectedString, this.value, 'Expected the \'{1}\' does not contain \'{0}\''),
         );
     });
 
@@ -89,10 +90,10 @@ export class StringAssertion {
   public containsAny(expectedStringArray: Array<string>): Continuance<this, string> {
     expectedStringArray.forEach((expectedString) => {
       if (!this.opposite ? !this.value.includes(expectedString) : this.value.includes(expectedString)) {
-        Execute.stuff.throwWithMessage(
+        Execute.stuff.throwWithResultMessage(
           !this.opposite
-            ? `Expected the '${this.value}' contains '${expectedString}'`
-            : `Expected the '${this.value}' does not contain '${expectedString}'`,
+            ? ExpectedResult.fail(expectedString, this.value, 'Expected the \'{1}\' contains \'{0}\'')
+            : ExpectedResult.fail(expectedString, this.value, 'Expected the \'{1}\' does not contain \'{0}\''),
         );
       }
     });
@@ -107,10 +108,10 @@ export class StringAssertion {
   public startsWith(expected: string): Continuance<this, string> {
     Execute.stuff
       .checkCondition(!this.opposite ? this.value.startsWith(expected) : !this.value.startsWith(expected))
-      .throwWithMessage(
+      .throwWithResultMessage(
         !this.opposite
-          ? `Expected the '${this.value}' starts with '${expected}'`
-          : `Expected the '${this.value}' does not start with '${expected}'`,
+          ? ExpectedResult.fail(expected, this.value, 'Expected the \'{1}\' starts with \'{0}\'')
+          : ExpectedResult.fail(expected, this.value, 'Expected the \'{1}\' does not start with \'{0}\''),
       );
 
     return new Continuance(this, this.value);
@@ -123,10 +124,10 @@ export class StringAssertion {
   public endsWith(expected: string): Continuance<this, string> {
     Execute.stuff
       .checkCondition(!this.opposite ? this.value.endsWith(expected) : !this.value.endsWith(expected))
-      .throwWithMessage(
+      .throwWithResultMessage(
         !this.opposite
-          ? `Expected the '${this.value}' ends with '${expected}'`
-          : `Expected the '${this.value}' does not end with '${expected}'`,
+        ? ExpectedResult.fail(expected, this.value, 'Expected the \'{1}\' ends with \'{0}\'')
+        : ExpectedResult.fail(expected, this.value, 'Expected the \'{1}\' does not end with \'{0}\''),
       );
 
     return new Continuance(this, this.value);
@@ -139,10 +140,10 @@ export class StringAssertion {
   public hasLength(expectedLength: number): Continuance<this, string> {
     Execute.stuff
       .checkCondition(!this.opposite ? this.value.length === expectedLength : this.value.length !== expectedLength)
-      .throwWithMessage(
+      .throwWithResultMessage(
         !this.opposite
-          ? `Expected the '${this.value}' has a length '${expectedLength}', but found '${this.value.length}'`
-          : `Expected the '${this.value}' has not a length '${expectedLength}', but found '${this.value.length}'`,
+          ? ExpectedResult.fail(expectedLength, this.value.length, `Expected the '${this.value}' has a length '{0}', but found '{1}'`)
+          : ExpectedResult.fail(expectedLength, this.value.length, `Expected the '${this.value}' has not a length '{0}', but found '{1}'`),
       );
 
     return new Continuance(this, this.value);
@@ -154,10 +155,10 @@ export class StringAssertion {
    */
   public match(regexExpr: string | RegExp): Continuance<this, string> {
     if (!this.opposite ? this.value.match(regexExpr) === null : this.value.match(regexExpr) !== null) {
-      Execute.stuff.throwWithMessage(
+      Execute.stuff.throwWithResultMessage(
         !this.opposite
-          ? `Expected the '${this.value}' matches with ${regexExpr} regular expression`
-          : `Expected the '${this.value}' does not match with ${regexExpr} regular expression`,
+          ? ExpectedResult.fail(regexExpr, this.value, 'Expected the \'{1}\' matches with {0} regular expression')
+          : ExpectedResult.fail(regexExpr, this.value, 'Expected the \'{1}\' does not match with {0} regular expression'),
       );
     }
 

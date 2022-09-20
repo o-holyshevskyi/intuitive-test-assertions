@@ -114,13 +114,13 @@ describe('Negative tests for string type', () => {
     test('Test be() method', () => {
         const str = 'Intuitive tests assertions';
 
-        expect(() => str.must().be('Tests assertions')).toThrow('Expected value to be \'\"Tests assertions\"\', but found \'\"Intuitive tests assertions\"\'');
+        expect(() => str.must().be('Tests assertions')).toThrow('Expected value to be \'Tests assertions\', but found \'Intuitive tests assertions\'');
     })
 
     test('Test not.be() method', () => {
         const str = 'Intuitive tests assertions';
 
-        expect(() => str.must().not.be(str)).toThrow('Expected value to not be \'\"Intuitive tests assertions\"\', but found \'\"Intuitive tests assertions\"\'');
+        expect(() => str.must().not.be(str)).toThrow('Expected value to not be \'Intuitive tests assertions\', but found \'Intuitive tests assertions\'');
     })
 
     test('Test beEmptyOrWhiteSpace() method', () => {

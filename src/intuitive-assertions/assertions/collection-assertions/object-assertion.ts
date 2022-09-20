@@ -2,6 +2,7 @@ import { Continuance } from '../../continuance/continuance';
 import { Execute } from '../../executor/execute';
 import { Expression } from '../expression/expression';
 import { trimArgs } from '../../utils/utils';
+import { ExpectedResult } from '../expected-result/expected-result';
 
 export class ObjectAssertion {
   constructor(public readonly subject: object | any, private readonly opposite = false) {}
@@ -19,10 +20,10 @@ export class ObjectAssertion {
   public beEmpty(): Continuance<this, object> {
     Execute.stuff
       .checkCondition(!this.opposite ? Object.keys(this.subject).length === 0 : Object.keys(this.subject).length > 0)
-      .throwWithMessage(
+      .throwWithResultMessage(
         !this.opposite
-          ? `Expected collection to be empty, but found ${JSON.stringify(this.subject?.valueOf())}`
-          : `Expected collection to not be empty, but found ${JSON.stringify(this.subject?.valueOf())}`,
+          ? ExpectedResult.fail(undefined, JSON.stringify(this.subject?.valueOf()), 'Expected collection to be empty, but found {1}')
+          : ExpectedResult.fail(undefined, JSON.stringify(this.subject?.valueOf()), 'Expected collection to not be empty, but found {1}'),
       );
 
     return new Continuance(this, this.subject);
@@ -37,10 +38,10 @@ export class ObjectAssertion {
       .checkCondition(
         !this.opposite ? Object.keys(this.subject).length === length : Object.keys(this.subject).length !== length,
       )
-      .throwWithMessage(
+      .throwWithResultMessage(
         !this.opposite
-          ? `Expected collection to have length '${length}', but found '${Object.keys(this.subject).length}'`
-          : `Expected collection to not have length '${length}', but found '${Object.keys(this.subject).length}'`,
+          ? ExpectedResult.fail(length, Object.keys(this.subject).length, 'Expected collection to have length \'{0}\', but found \'{1}\'')
+          : ExpectedResult.fail(length, Object.keys(this.subject).length, 'Expected collection to not have length \'{0}\', but found \'{1}\''),
       );
 
     return new Continuance(this, this.subject);
@@ -55,14 +56,10 @@ export class ObjectAssertion {
       .checkCondition(
         !this.opposite ? Object.keys(this.subject).length >= length : Object.keys(this.subject).length <= length,
       )
-      .throwWithMessage(
+      .throwWithResultMessage(
         !this.opposite
-          ? `Expected collection to have length equal or greater than '${length}', but found '${
-              Object.keys(this.subject).length
-            }'`
-          : `Expected collection to not have length equal or greater than '${length}', but found '${
-              Object.keys(this.subject).length
-            }'`,
+          ? ExpectedResult.fail(length, Object.keys(this.subject).length, 'Expected collection to have length equal or greater than \'{0}\', but found \'{1}\'')
+          : ExpectedResult.fail(length, Object.keys(this.subject).length, 'Expected collection to not have length equal or greater than \'{0}\', but found \'{1}\''),
       );
 
     return new Continuance(this, this.subject);
@@ -77,14 +74,10 @@ export class ObjectAssertion {
       .checkCondition(
         !this.opposite ? Object.keys(this.subject).length <= length : Object.keys(this.subject).length >= length,
       )
-      .throwWithMessage(
+      .throwWithResultMessage(
         !this.opposite
-          ? `Expected collection to have length equal or lesser than '${length}', but found '${
-              Object.keys(this.subject).length
-            }'`
-          : `Expected collection to not have length equal or lesser than '${length}', but found '${
-              Object.keys(this.subject).length
-            }'`,
+          ? ExpectedResult.fail(length, Object.keys(this.subject).length, 'Expected collection to have length equal or lesser than \'{0}\', but found \'{1}\'')
+          : ExpectedResult.fail(length, Object.keys(this.subject).length, 'Expected collection to not have length equal or lesser than \'{0}\', but found \'{1}\''),
       );
 
     return new Continuance(this, this.subject);
@@ -109,12 +102,10 @@ export class ObjectAssertion {
     if (!this.opposite ? isNullOrUndefined : !isNullOrUndefined) {
       return new Continuance(this, this.subject);
     } else {
-      Execute.stuff.throwWithMessage(
+      Execute.stuff.throwWithResultMessage(
         !this.opposite
-          ? `Expected collection contains null or undefined, but found ${JSON.stringify(this.subject?.valueOf())}`
-          : `Expected collection does not contain null or undefined, but found ${JSON.stringify(
-              this.subject?.valueOf(),
-            )}`,
+          ? ExpectedResult.fail(undefined, JSON.stringify(this.subject?.valueOf()), 'Expected collection contains null or undefined, but found {1}')
+          : ExpectedResult.fail(undefined, JSON.stringify(this.subject?.valueOf()), 'Expected collection does not contain null or undefined, but found {1}'),
       );
     }
 
@@ -141,12 +132,10 @@ export class ObjectAssertion {
     if (isContainsProp) {
       return new Continuance(this, this.subject);
     } else {
-      Execute.stuff.throwWithMessage(
+      Execute.stuff.throwWithResultMessage(
         !this.opposite
-          ? `Expected collection contains '${expectedKey}' key, but found ${JSON.stringify(this.subject?.valueOf())}`
-          : `Expected collection does not contain '${expectedKey}' key, but found ${JSON.stringify(
-              this.subject?.valueOf(),
-            )}`,
+          ? ExpectedResult.fail(expectedKey, JSON.stringify(this.subject?.valueOf()), 'Expected collection contains \'{0}\' key, but found {1}')
+          : ExpectedResult.fail(expectedKey, JSON.stringify(this.subject?.valueOf()), 'Expected collection does not contain \'{0}\' key, but found {1}'),
       );
     }
 
@@ -160,14 +149,10 @@ export class ObjectAssertion {
   public contains(expression: (object: Expression) => boolean): Continuance<this, object> {
     Execute.stuff
       .checkCondition(!this.opposite ? expression(this) : !expression(this))
-      .throwWithMessage(
+      .throwWithResultMessage(
         !this.opposite
-          ? `Expected collection contains ${trimArgs(arguments[0])}, but found ${JSON.stringify(
-              this.subject?.valueOf(),
-            )}}`
-          : `Expected collection does not contain ${trimArgs(arguments[0])}, but found ${JSON.stringify(
-              this.subject?.valueOf(),
-            )}}`,
+          ? ExpectedResult.fail(trimArgs(arguments[0]), JSON.stringify(this.subject?.valueOf()), 'Expected collection contains {0}, but found {1}')
+          : ExpectedResult.fail(trimArgs(arguments[0]), JSON.stringify(this.subject?.valueOf()), 'Expected collection does not contain {0}, but found {1}'),
       );
 
     return new Continuance(this, this.subject);

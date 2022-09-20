@@ -42,25 +42,25 @@ describe('Negative tests for boolean assertion', () => {
   test('negative beTruth()', () => {
     const bool = false;
 
-    expect(() => bool.must().beTrue()).toThrow('Expected value to be \'True\', but found \'false\'');
+    expect(() => bool.must().beTrue()).toThrow('Expected value to be \'true\', but found \'false\'');
   });
 
   test('negative not.beTruth()', () => {
     const bool = true;
 
-    expect(() => bool.must().not.beTrue()).toThrow('Expected value to not be \'True\', but found \'true\'');
+    expect(() => bool.must().not.beTrue()).toThrow('Expected value to not be \'true\', but found \'true\'');
   });
 
   test('negative beFalse()', () => {
     const bool = true;
 
-    expect(() => bool.must().beFalse()).toThrow('Expected value to be \'False\', but found \'true\'');
+    expect(() => bool.must().beFalse()).toThrow('Expected value to be \'false\', but found \'true\'');
   });
 
   test('negative not.beFalse()', () => {
     const bool = false;
 
-    expect(() => bool.must().not.beFalse()).toThrow('Expected value to not be \'False\', but found \'false\'');
+    expect(() => bool.must().not.beFalse()).toThrow('Expected value to not be \'false\', but found \'false\'');
   });
 
   test('negative be()', () => {
