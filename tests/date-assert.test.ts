@@ -198,13 +198,13 @@ describe('Negative tests for date type', () => {
     test('Test be() method', () => {
         const date = new Date(2002, 8, 5);
 
-        expect(() => date.must().be(new Date(2008, 8, 25))).toThrow(`Expected value to be \'${JSON.stringify(new Date(2008, 8, 25))}', but found \'${JSON.stringify(date)}\'`);
+        expect(() => date.must().be(new Date(2008, 8, 25))).toThrow(`Expected value to be \'${new Date(2008, 8, 25).toISOString()}', but found \'${date.toISOString()}\'`);
     })
 
     test('Test for not.be() method', () => {
         const date = new Date(2008, 8, 25);
 
-        expect(() => date.must().not.be(date)).toThrow(`Expected value to not be \'${JSON.stringify(date)}\', but found \'${JSON.stringify(date)}\'`);
+        expect(() => date.must().not.be(date)).toThrow(`Expected value to not be \'${date.toISOString()}\', but found \'${date.toISOString()}\'`);
     })
     
     test('Test beAfter() method', () => {
@@ -355,14 +355,14 @@ describe('Negative tests for date type', () => {
     test('Test bePrecisely() method', () => {
         const date = new Date(2000, 4, 13);
 
-        expect(() => date.must().bePrecisely(new Date(2000, 4, 14).getTime())).toThrow(`Expected date precisely equals to \'${new Date(2000, 4, 14).getTime()}\', but found ${date.getTime()}`);
+        expect(() => date.must().bePrecisely(new Date(2000, 4, 14).getTime())).toThrow(`Expected date precisely equals to \'${new Date(2000, 4, 14).getTime()}\', but found '${date.getTime()}'`);
         
     })
 
     test('Test not.bePrecisely() method', () => {
         const date = new Date(2000, 4, 13);
 
-        expect(() => date.must().not.bePrecisely(new Date(2000, 4, 13).getTime())).toThrow(`Expected date precisely not equals to \'${new Date(2000, 4, 13).getTime()}\', but found ${date.getTime()}`);
+        expect(() => date.must().not.bePrecisely(new Date(2000, 4, 13).getTime())).toThrow(`Expected date precisely not equals to \'${new Date(2000, 4, 13).getTime()}\', but found '${date.getTime()}'`);
     })
 
     test('Test beOneOf() method', () => {
