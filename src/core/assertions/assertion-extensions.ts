@@ -42,31 +42,26 @@ Date.prototype.must = function (): DateAssertion {
 
 declare module './assertions' {
     interface Assertion<T> {
-        soft(): SoftAssertion<T>;
+      soft: SoftAssertion<T>;
     }
 }
 
-Assertion.prototype.soft = function (this: Assertion<any>) {
-    softAssertionState.assertion = new SoftAssertion(this.actualValue);
-    return softAssertionState.assertion;
-};
+Object.defineProperty(Assertion.prototype, 'soft', {
+    get: function (this: Assertion<any>) {
+        if (!softAssertionState.assertion) {
+            softAssertionState.assertion = new SoftAssertion(this.actualValue);
+        }
+        return softAssertionState.assertion;
+    },
+});
 
 const softAssertionState: { assertion?: SoftAssertion<any> } = {};
 
 afterEach(() => {
-  if (softAssertionState.assertion && softAssertionState.assertion.getErrors().length > 0) {
+  if (softAssertionState.assertion) {
     softAssertionState.assertion.throwIfFailed();
     softAssertionState.assertion = undefined;
   }
 });
-
-export function soft(): SoftAssertion<any> {
-    if (!softAssertionState.assertion) {
-      throw new Error(
-        'Cannot use soft assertions outside of test context. Make sure to call soft() within a test.'
-      );
-    }
-    return softAssertionState.assertion;
-  }
 
 export {}
