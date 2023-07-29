@@ -1,4 +1,5 @@
 import '../src/core/index';
+import { getRegexExp } from './extension/regex-extension';
 
 describe('test for string assertion', () => {
     test('be()', () => {
@@ -18,13 +19,13 @@ describe('test for string assertion', () => {
         const str = 'someStr';
         const expStr = 'someExpStr'
     
-        expect(() => str.must().be(expStr)).toThrow(`Assertion Failed: ${str} is not equal to ${expStr}`);
+        expect(() => str.must().be(expStr)).toThrow(getRegexExp(`Expected ${str} is not equal to ${expStr}`));
       });
   
     test('throw not.be()', () => {
         const str = 'someStr';
     
-        expect(() => str.must().not.be(str)).toThrow(`Assertion Failed: ${str} is equal to ${str}`);
+        expect(() => str.must().not.be(str)).toThrow(getRegexExp(`Expected ${str} is equal to ${str}`));
     });
 
     test('contain()', () => {

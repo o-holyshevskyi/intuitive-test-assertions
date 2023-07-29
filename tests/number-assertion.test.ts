@@ -1,4 +1,5 @@
 import '../src/core/index';
+import { getRegexExp } from './extension/regex-extension';
 
 describe('test for number assertion', () => {
     test('be()', () => {
@@ -17,13 +18,13 @@ describe('test for number assertion', () => {
         const num = 5;
         const expNum = 6;
     
-        expect(() => num.must().be(expNum)).toThrow(`Assertion Failed: ${num} is not equal to ${expNum}`);
+        expect(() => num.must().be(expNum)).toThrow(getRegexExp(`Expected ${num} is not equal to ${expNum}`));
       });
   
     test('throw not.be()', () => {
         const num = 5;
     
-        expect(() => num.must().not.be(num)).toThrow(`Assertion Failed: ${num} is equal to ${num}`);
+        expect(() => num.must().not.be(num)).toThrow(getRegexExp(`Expected ${num} is equal to ${num}`));
     });
 
     test('beLessThan()', () => {

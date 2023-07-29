@@ -30,12 +30,3 @@ afterEach(() => {
 });
 
 export {}
-
-//TODO: Create a colorized msgs
-/*function colorizeErrorMessage(message: string): string {
-    // ANSI escape codes for colors
-    const redColor = '\x1b[31m'; // Red color
-    const resetColor = '\x1b[0m'; // Reset color to default
-  
-    return `${redColor}${message}${resetColor}`;
-}*/

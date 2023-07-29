@@ -1,12 +1,17 @@
+import { ErrorBuilder } from "../../utils/errors/error-builder";
+
 export class Assertion<T> {
   protected actualValue: T;
+  protected readonly errorBuilder: ErrorBuilder<T>;
+
   constructor(actualValue: T) {
     this.actualValue = actualValue;
+    this.errorBuilder = new ErrorBuilder<T>();
   }
 
   be(expectedValue: T): void {
     if (expectedValue !== this.actualValue) {
-        throw Error(`Assertion Failed: ${this.actualValue instanceof Date ? this.actualValue.toLocaleString() : this.actualValue} is not equal to ${expectedValue instanceof Date ? expectedValue.toLocaleString() : expectedValue}`);
+      throw this.errorBuilder.createError(this.actualValue, 'be', expectedValue);
     }
   }
 
@@ -18,14 +23,16 @@ export class Assertion<T> {
 
 export class AssertionNot<T> {
   protected actualValue: T;
+  protected readonly errorBuilder: ErrorBuilder<T>;
 
   constructor(actualValue: T) {
     this.actualValue = actualValue;
+    this.errorBuilder = new ErrorBuilder<T>();
   }
 
   be(expectedValue: T): void {
     if (expectedValue === this.actualValue) {
-      throw new Error(`Assertion Failed: ${this.actualValue instanceof Date ? this.actualValue.toLocaleString() : this.actualValue} is equal to ${expectedValue instanceof Date ? expectedValue.toLocaleString() : expectedValue}`);
+      throw this.errorBuilder.createError(this.actualValue, 'not.be', expectedValue);
     }
   }
 }

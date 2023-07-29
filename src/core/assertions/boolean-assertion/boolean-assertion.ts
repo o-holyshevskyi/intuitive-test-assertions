@@ -11,13 +11,13 @@ export class BooleanAssertion extends Assertion<boolean> {
 
     beTrue(): void {
         if (this.actualValue !== true) {
-          throw new Error(`Assertion Failed: Expected true, but got ${this.actualValue}`);
+            throw this.errorBuilder.createError(this.actualValue, 'beTrue');
         }
     }
 
     beFalse(): void {
         if (this.actualValue !== false) {
-          throw new Error(`Assertion Failed: Expected false, but got ${this.actualValue}`);
+            throw this.errorBuilder.createError(this.actualValue, 'beFalse');
         }
     }
 }
@@ -29,13 +29,13 @@ class BooleanAssertionNot extends AssertionNot<boolean> {
 
     beTrue(): void {
         if (this.actualValue === true) {
-          throw new Error(`Assertion Failed: Expected not to be true, but got ${this.actualValue}`);
+            throw this.errorBuilder.createError(this.actualValue, 'not.beTrue');
         }
     }
 
     beFalse(): void {
         if (this.actualValue === false) {
-          throw new Error(`Assertion Failed: Expected not to be false, but got ${this.actualValue}`);
+            throw this.errorBuilder.createError(this.actualValue, 'not.beFalse');
         }
     }
 }

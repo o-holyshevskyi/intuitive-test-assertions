@@ -1,4 +1,5 @@
 import '../src/core/index';
+import { getRegexExp } from './extension/regex-extension';
 
 describe('test for date assertion', () => {
     test('be()', () => {
@@ -18,13 +19,13 @@ describe('test for date assertion', () => {
         const date = new Date();
         const expDate = new Date('2023-07-28');
     
-        expect(() => date.must().be(expDate)).toThrow(`Assertion Failed: ${date.toLocaleString()} is not equal to ${expDate.toLocaleString()}`);
+        expect(() => date.must().be(expDate)).toThrow(getRegexExp(`Expected ${date.toLocaleString()} is not equal to ${expDate.toLocaleString()}`));
       });
   
     test('throw not.be()', () => {
         const date = new Date();
     
-        expect(() => date.must().not.be(date)).toThrow(`Assertion Failed: ${date.toLocaleString()} is equal to ${date.toLocaleString()}`);
+        expect(() => date.must().not.be(date)).toThrow(getRegexExp(`Expected ${date.toLocaleString()} is equal to ${date.toLocaleString()}`));
     });
 
     test('beBefore()', () => {
